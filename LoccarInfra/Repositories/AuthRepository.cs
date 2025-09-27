@@ -7,7 +7,7 @@ using LoccarInfra.Interfaces;
 using LoccarInfra.ORM.model;
 using Microsoft.EntityFrameworkCore;
 
-namespace LoccarInfra
+namespace LoccarInfra.Repositories
 {
     public class AuthRepository : IAuthRepository
     {

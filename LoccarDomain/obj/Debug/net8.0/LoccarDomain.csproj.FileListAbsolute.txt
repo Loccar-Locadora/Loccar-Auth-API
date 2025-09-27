@@ -22,3 +22,4 @@ C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\ne
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\refint\LoccarDomain.dll
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.pdb
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\ref\LoccarDomain.dll
+C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.sourcelink.json

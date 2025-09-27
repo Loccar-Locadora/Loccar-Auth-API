@@ -71,6 +71,7 @@ public class AuthApplication : IAuthApplication
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Erro: " + ex);
             baseReturn.Code = "500";
             baseReturn.Message = $"Ocorreu um erro inesperado: {ex.Message}";
         }

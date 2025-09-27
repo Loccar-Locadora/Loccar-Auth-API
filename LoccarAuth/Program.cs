@@ -1,8 +1,8 @@
 using System.Text;
 using LoccarApplication.Interfaces;
-using LoccarInfra;
 using LoccarInfra.Interfaces;
 using LoccarInfra.ORM.model;
+using LoccarInfra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

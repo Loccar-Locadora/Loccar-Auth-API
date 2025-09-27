@@ -322,3 +322,4 @@ C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarAuth\obj\Debug\net8
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.pdb
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.genruntimeconfig.cache
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\ref\LoccarWebapi.dll
+C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.sourcelink.json
