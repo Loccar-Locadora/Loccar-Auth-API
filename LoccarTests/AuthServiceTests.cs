@@ -8,6 +8,7 @@ using LoccarDomain.Register;
 using LoccarDomain.User;
 using LoccarInfra.Interfaces;
 using LoccarInfra.ORM.model;
+using LoccarTests;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
@@ -17,10 +18,12 @@ public class AuthApplicationTests
     private readonly Mock<IAuthRepository> _authRepoMock;
     private readonly IConfiguration _configuration;
     private readonly AuthApplication _authApp;
+    private readonly HttpClient _httpClient;
 
     public AuthApplicationTests()
     {
         _authRepoMock = new Mock<IAuthRepository>();
+        _httpClient = new HttpClient();
 
         var inMemorySettings = new Dictionary<string, string> {
             {"Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890"},
@@ -31,7 +34,7 @@ public class AuthApplicationTests
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
-        _authApp = new AuthApplication(_configuration, _authRepoMock.Object);
+        _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
     }
 
     #region Register Tests
@@ -39,12 +42,13 @@ public class AuthApplicationTests
     [Fact]
     public async Task Register_ShouldReturn201_WhenUserDoesNotExist()
     {
-        // Arrange
         var request = new RegisterRequest
         {
             Email = "teste@email.com",
             Username = "Teste",
-            Password = "123456"
+            Password = "123456",
+            Cnh = "12345678901",
+            CellPhone = "61999999999"
         };
 
         _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
@@ -52,6 +56,17 @@ public class AuthApplicationTests
 
         _authRepoMock.Setup(r => r.RegisterUser(It.IsAny<User>()))
                      .Returns(Task.CompletedTask);
+
+        // Cria um HttpClient fake que sempre retorna Created
+        var fakeResponse = new HttpResponseMessage(System.Net.HttpStatusCode.Created);
+        var fakeHandler = new FakeHttpMessageHandler(fakeResponse);
+        var httpClient = new HttpClient(fakeHandler);
+
+        var config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string> { { "LoccarApi:BaseUrl", "http://fake-api" } })
+            .Build();
+
+        var _authApp = new AuthApplication(config, _authRepoMock.Object, httpClient);
 
         // Act
         var result = await _authApp.Register(request);
@@ -62,6 +77,7 @@ public class AuthApplicationTests
         result.Data.Username.Should().Be("Teste");
         result.Data.Email.Should().Be("teste@email.com");
     }
+
 
     [Fact]
     public async Task Register_ShouldReturn400_WhenUserAlreadyExists()

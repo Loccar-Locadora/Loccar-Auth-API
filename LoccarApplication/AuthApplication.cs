@@ -2,27 +2,33 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using LoccarDomain.Register;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using LoccarDomain.User;
+using System.Text.Json;
+using System.Threading.Tasks;
 using LoccarApplication.Interfaces;
+using LoccarDomain.Common;
 using LoccarDomain.Login;
+using LoccarDomain.Register;
+using LoccarDomain.User;
 using LoccarInfra.Interfaces;
 using LoccarInfra.ORM.model;
-using System.Threading.Tasks;
-using LoccarDomain.Common;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 
 public class AuthApplication : IAuthApplication
 {
     private readonly IConfiguration _config;
     private readonly IAuthRepository _authRepository;
+    private readonly string _loccarApi;
+    private readonly HttpClient _httpClient;
 
-    public AuthApplication(IConfiguration config, IAuthRepository authRepository)
+    public AuthApplication(IConfiguration config, IAuthRepository authRepository, HttpClient httpClient)
     {
         _config = config;
         _authRepository = authRepository;
+        _loccarApi = config["LoccarApi:BaseUrl"];
+        _httpClient = httpClient;
     }
 
     public async Task<BaseReturn<string>> Login(LoginRequest loginRequest)
@@ -71,7 +77,6 @@ public class AuthApplication : IAuthApplication
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Erro: " + ex);
             baseReturn.Code = "500";
             baseReturn.Message = $"Ocorreu um erro inesperado: {ex.Message}";
         }
@@ -90,14 +95,30 @@ public class AuthApplication : IAuthApplication
                 {
                     Username = request.Username,
                     Email = request.Email,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                    
                 };
                 await _authRepository.RegisterUser(user);
                 UserData userData = new UserData()
                 {
                     Username = request.Username,
-                    Email = request.Email
+                    Email = request.Email,
+                    Cnh = request.Cnh,
+                    Cellphone = request.CellPhone
                 };
+
+                var json = JsonSerializer.Serialize(userData);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(_loccarApi + "/locatario/register", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    baseReturn.Code = "400";
+                    baseReturn.Message = "Erro ao cadastrar locatário";
+                    return baseReturn;
+                }
+
                 baseReturn.Code = "201";
                 baseReturn.Message = "Usuário cadastrado com sucesso!";
                 baseReturn.Data = userData;
@@ -110,6 +131,8 @@ public class AuthApplication : IAuthApplication
         } 
         catch (Exception ex) 
         {
+
+            Console.WriteLine("Erro: " + ex);
             baseReturn.Code = "500";
             baseReturn.Message = $"Ocorreu um erro inesperado: {ex.Message}";
         }

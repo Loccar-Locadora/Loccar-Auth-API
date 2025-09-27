@@ -38,6 +38,8 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 // Repositório e Application Service - Scoped
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthApplication, AuthApplication>();
+builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
+builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
 
 
 builder.Services.AddEndpointsApiExplorer();

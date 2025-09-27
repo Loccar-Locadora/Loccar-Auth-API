@@ -20,6 +20,10 @@ namespace LoccarDomain.User
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? PasswordHash { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Cnh { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Cellphone { get; set; }
     }
 }
 

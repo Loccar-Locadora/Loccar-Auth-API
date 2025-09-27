@@ -132,6 +132,14 @@
           "email": {
             "type": "string",
             "nullable": true
+          },
+          "cnh": {
+            "type": "string",
+            "nullable": true
+          },
+          "cellPhone": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -171,6 +179,14 @@
             "nullable": true
           },
           "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "cnh": {
+            "type": "string",
+            "nullable": true
+          },
+          "cellphone": {
             "type": "string",
             "nullable": true
           }
