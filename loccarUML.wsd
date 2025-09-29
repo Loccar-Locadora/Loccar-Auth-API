@@ -1,0 +1,87 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ============================
+' Classes principais
+' ============================
+
+class Locatario {
+  +idLocatario : int
+  +email : string
+  +telefone : string
+  +cnh : string
+  +created : datetime
+}
+
+class Reserva {
+  +numeroReserva : int
+  +dataLocacao : date
+  +horaLocacao : time
+  +dataEntrega : date
+  +horaEntrega : time
+  +diarias : int
+  +valorDiaria : decimal
+  +tipoDiaria : string
+  +valorSeguroTerceiro : decimal
+  +valorSeguroCarro : decimal
+  +valorImposto : decimal
+  +seguroCarro : bool
+}
+
+class Veiculo {
+  +idVeiculo : int
+  +marca : string
+  +modelo : string
+  +anoFabricacao : int
+  +anoModelo : int
+  +renavam : string
+  +capacidadeTanque : decimal
+  +valorDiaria : decimal
+  +valorDiariaEmpresa : decimal
+  +valorDiariaMensal : decimal
+  +valorDiariaReduzida : decimal
+}
+
+' ============================
+' Especializações de Veículo
+' ============================
+class Veiculo_Carga {
+  +capacidadeCarga : decimal
+  +tipoCarga : string
+  +tara : decimal
+  +tamanhoCompartimentoCarga : string
+}
+
+class Veiculo_Passeio {
+  +categoria : string
+  +automatico : bool
+  +direcaoHidraulica : bool
+  +arCondicionado : bool
+}
+
+class Veiculo_Passageiro {
+  +capacidadePassageiro : int
+  +televisao : bool
+  +arCondicionado : bool
+  +direcaoHidraulica : bool
+}
+
+class Motocicleta {
+  +controleTracao : bool
+  +freioAbs : bool
+  +pilotoAutomatico : bool
+}
+
+' ============================
+' Relacionamentos
+' ============================
+
+Locatario "1" -- "0..*" Reserva : faz >
+Reserva "1" -- "1..*" Veiculo : possui >
+
+Veiculo <|-- Veiculo_Carga
+Veiculo <|-- Veiculo_Passeio
+Veiculo <|-- Veiculo_Passageiro
+Veiculo <|-- Motocicleta
+
+@enduml
