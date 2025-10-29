@@ -38,7 +38,7 @@ namespace LoccarTests
             var expectedResult = new BaseReturn<string>
             {
                 Code = "200",
-                Message = "Usuário logado com sucesso",
+                Message = "Usuario logado com sucesso",
                 Data = "fake-jwt-token"
             };
 
@@ -66,7 +66,7 @@ namespace LoccarTests
             var expectedResult = new BaseReturn<string>
             {
                 Code = "401",
-                Message = "Usuário não autorizado",
+                Message = "Usuario nao autorizado",
                 Data = null
             };
 
@@ -147,7 +147,7 @@ namespace LoccarTests
             var expectedResult = new BaseReturn<UserData>
             {
                 Code = "201",
-                Message = "Usuário cadastrado com sucesso!",
+                Message = "Usuario cadastrado com sucesso!",
                 Data = expectedUserData
             };
 
@@ -178,7 +178,7 @@ namespace LoccarTests
             var expectedResult = new BaseReturn<UserData>
             {
                 Code = "400",
-                Message = "Já existe um usuário com esse email",
+                Message = "Ja existe um usuario com esse email",
                 Data = null
             };
 

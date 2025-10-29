@@ -42,7 +42,7 @@ public class AuthApplication : IAuthApplication
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.PasswordHash))
             {
                 baseReturn.Code = "401";
-                baseReturn.Message = "Usuário não autorizado";
+                baseReturn.Message = "Usuario nao autorizado";
                 return baseReturn;
             }
 
@@ -72,12 +72,12 @@ public class AuthApplication : IAuthApplication
             if (token == null)
             {
                 baseReturn.Code = "401";
-                baseReturn.Message = "Usuário não autorizado";
+                baseReturn.Message = "Usuario nao autorizado";
                 return baseReturn;
             }
 
             baseReturn.Code = "200";
-            baseReturn.Message = "Usuário logado com sucesso";
+            baseReturn.Message = "Usuario logado com sucesso";
             baseReturn.Data = tokenHandler.WriteToken(token);
         }
         catch (Exception ex)
@@ -101,7 +101,7 @@ public class AuthApplication : IAuthApplication
                     Username = request.Username,
                     Email = request.Email,
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    Roles = new List<Role> { new Role { Id = 1 } } // Apenas o Id já basta
+                    Roles = new List<Role> { new Role { Id = 1 } } // Apenas o Id ja basta
                 };
 
                 await _authRepository.RegisterUser(user);
@@ -122,18 +122,18 @@ public class AuthApplication : IAuthApplication
                 if (!response.IsSuccessStatusCode)
                 {
                     baseReturn.Code = "400";
-                    baseReturn.Message = "Erro ao cadastrar locatário";
+                    baseReturn.Message = "Erro ao cadastrar locatario";
                     return baseReturn;
                 }
 
                 baseReturn.Code = "201";
-                baseReturn.Message = "Usuário cadastrado com sucesso!";
+                baseReturn.Message = "Usuario cadastrado com sucesso!";
                 baseReturn.Data = userData;
             }
             else
             {
                 baseReturn.Code = "400";
-                baseReturn.Message = "Já existe um usuário com esse email";
+                baseReturn.Message = "Ja existe um usuario com esse email";
             }
         } 
         catch (Exception ex) 

@@ -317,7 +317,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("400");
-            result.Message.Should().Be("Erro ao cadastrar locatário");
+            result.Message.Should().Be("Erro ao cadastrar locatario");
             result.Data.Should().BeNull();
         }
 

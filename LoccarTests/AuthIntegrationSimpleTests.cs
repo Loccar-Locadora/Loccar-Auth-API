@@ -77,7 +77,7 @@ namespace LoccarTests
             // Assert
             result.Should().NotBeNull();
             result.Code.Should().Be("201");
-            result.Message.Should().Be("Usuário cadastrado com sucesso!");
+            result.Message.Should().Be("Usuario cadastrado com sucesso!");
 
             // Verify user was created in database
             var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
@@ -116,7 +116,7 @@ namespace LoccarTests
             // Assert
             result.Should().NotBeNull();
             result.Code.Should().Be("400");
-            result.Message.Should().Be("Já existe um usuário com esse email");
+            result.Message.Should().Be("Ja existe um usuario com esse email");
             result.Data.Should().BeNull();
         }
 
@@ -152,7 +152,7 @@ namespace LoccarTests
             // Assert
             result.Should().NotBeNull();
             result.Code.Should().Be("200");
-            result.Message.Should().Be("Usuário logado com sucesso");
+            result.Message.Should().Be("Usuario logado com sucesso");
             result.Data.Should().NotBeNullOrEmpty();
         }
 
@@ -172,7 +172,7 @@ namespace LoccarTests
             // Assert
             result.Should().NotBeNull();
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 
@@ -204,7 +204,7 @@ namespace LoccarTests
             // Assert
             result.Should().NotBeNull();
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 
@@ -220,7 +220,7 @@ namespace LoccarTests
                 "User1",
                 "password123",
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
 
             yield return new object[]
@@ -229,7 +229,7 @@ namespace LoccarTests
                 "User2",
                 "mySecretPass",
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
 
             yield return new object[]
@@ -238,7 +238,7 @@ namespace LoccarTests
                 "AdminUser",
                 "admin@2024",
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
         }
 
@@ -286,7 +286,7 @@ namespace LoccarTests
                 "nonexistent1@email.com",
                 "password123",
                 "401",
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
 
             yield return new object[]
@@ -294,7 +294,7 @@ namespace LoccarTests
                 "nonexistent2@domain.com",
                 "wrongpass",
                 "401", 
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
 
             yield return new object[]
@@ -302,7 +302,7 @@ namespace LoccarTests
                 "fake@email.com",
                 "",
                 "401",
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
         }
 
@@ -364,7 +364,7 @@ namespace LoccarTests
             // Assert 2
             loginResult.Should().NotBeNull();
             loginResult.Code.Should().Be("200");
-            loginResult.Message.Should().Be("Usuário logado com sucesso");
+            loginResult.Message.Should().Be("Usuario logado com sucesso");
             loginResult.Data.Should().NotBeNullOrEmpty();
 
             // Verify user exists in database

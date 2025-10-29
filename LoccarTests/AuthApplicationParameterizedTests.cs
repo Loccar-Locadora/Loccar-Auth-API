@@ -56,7 +56,7 @@ namespace LoccarTests
                     CellPhone = "61999999999" 
                 },
                 "201",
-                "Usuário cadastrado com sucesso!"
+                "Usuario cadastrado com sucesso!"
             };
             
             yield return new object[] 
@@ -70,7 +70,7 @@ namespace LoccarTests
                     CellPhone = "11888888888" 
                 },
                 "201",
-                "Usuário cadastrado com sucesso!"
+                "Usuario cadastrado com sucesso!"
             };
             
             yield return new object[] 
@@ -84,7 +84,7 @@ namespace LoccarTests
                     CellPhone = "21777777777" 
                 },
                 "201", 
-                "Usuário cadastrado com sucesso!"
+                "Usuario cadastrado com sucesso!"
             };
         }
 
@@ -118,21 +118,21 @@ namespace LoccarTests
             {
                 "test@email.com",
                 "400",
-                "Já existe um usuário com esse email"
+                "Ja existe um usuario com esse email"
             };
             
             yield return new object[] 
             {
                 "existing@user.com",
                 "400", 
-                "Já existe um usuário com esse email"
+                "Ja existe um usuario com esse email"
             };
             
             yield return new object[] 
             {
                 "admin@domain.com",
                 "400",
-                "Já existe um usuário com esse email"
+                "Ja existe um usuario com esse email"
             };
         }
 
@@ -185,7 +185,7 @@ namespace LoccarTests
                     Roles = new List<Role> { new Role { Id = 1, Name = "User" } }
                 },
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
 
             yield return new object[]
@@ -200,7 +200,7 @@ namespace LoccarTests
                     Roles = new List<Role> { new Role { Id = 2, Name = "Admin" } }
                 },
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
 
             yield return new object[]
@@ -215,7 +215,7 @@ namespace LoccarTests
                     Roles = new List<Role> { new Role { Id = 1, Name = "SuperAdmin" } }
                 },
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
         }
 
@@ -244,7 +244,7 @@ namespace LoccarTests
                 new LoginRequest { Email = "nonexistent@email.com", Password = "123456" },
                 (User)null,
                 "401",
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
 
             yield return new object[]
@@ -259,7 +259,7 @@ namespace LoccarTests
                     Roles = new List<Role> { new Role { Id = 1, Name = "User" } }
                 },
                 "401",
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
 
             yield return new object[]
@@ -274,7 +274,7 @@ namespace LoccarTests
                     Roles = new List<Role> { new Role { Id = 2, Name = "Admin" } }
                 },
                 "401",
-                "Usuário não autorizado"
+                "Usuario nao autorizado"
             };
         }
 
@@ -323,7 +323,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 
@@ -358,7 +358,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 

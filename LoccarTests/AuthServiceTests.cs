@@ -79,7 +79,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("201");
-            result.Message.Should().Be("Usuário cadastrado com sucesso!");
+            result.Message.Should().Be("Usuario cadastrado com sucesso!");
             result.Data.Username.Should().Be("Teste");
             result.Data.Email.Should().Be("teste@email.com");
         }
@@ -104,7 +104,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("400");
-            result.Message.Should().Be("Já existe um usuário com esse email");
+            result.Message.Should().Be("Ja existe um usuario com esse email");
             result.Data.Should().BeNull();
         }
 
@@ -133,7 +133,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("200");
-            result.Message.Should().Be("Usuário logado com sucesso");
+            result.Message.Should().Be("Usuario logado com sucesso");
             result.Data.Should().NotBeNullOrEmpty();
         }
 
@@ -155,7 +155,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 
@@ -179,7 +179,7 @@ namespace LoccarTests
 
             // Assert
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 

@@ -140,7 +140,7 @@ namespace LoccarTests
 
             result.Should().NotBeNull();
             result.Code.Should().Be("400");
-            result.Message.Should().Be("Já existe um usuário com esse email");
+            result.Message.Should().Be("Ja existe um usuario com esse email");
         }
 
         #endregion
@@ -189,7 +189,7 @@ namespace LoccarTests
 
             result.Should().NotBeNull();
             result.Code.Should().Be("200");
-            result.Message.Should().Be("Usuário logado com sucesso");
+            result.Message.Should().Be("Usuario logado com sucesso");
             result.Data.Should().NotBeNullOrEmpty();
         }
 
@@ -220,7 +220,7 @@ namespace LoccarTests
 
             result.Should().NotBeNull();
             result.Code.Should().Be("401");
-            result.Message.Should().Be("Usuário não autorizado");
+            result.Message.Should().Be("Usuario nao autorizado");
             result.Data.Should().BeNull();
         }
 
@@ -236,16 +236,16 @@ namespace LoccarTests
                 "User1",
                 "password123",
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
 
             yield return new object[]
             {
-                "integration2@email.com",
-                "User2", 
+                "integration2@email.com", 
+                "User2",
                 "mySecretPass",
                 "200",
-                "Usuário logado com sucesso"
+                "Usuario logado com sucesso"
             };
         }
 
@@ -356,7 +356,7 @@ namespace LoccarTests
 
             loginResult.Should().NotBeNull();
             loginResult.Code.Should().Be("200");
-            loginResult.Message.Should().Be("Usuário logado com sucesso");
+            loginResult.Message.Should().Be("Usuario logado com sucesso");
             loginResult.Data.Should().NotBeNullOrEmpty();
         }
 
