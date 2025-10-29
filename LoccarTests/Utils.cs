@@ -9,6 +9,7 @@ namespace LoccarTests
     public class FakeHttpMessageHandler : HttpMessageHandler
     {
         private readonly HttpResponseMessage _response;
+        public Action<HttpRequestMessage> OnSendAsync { get; set; }
 
         public FakeHttpMessageHandler(HttpResponseMessage response)
         {
@@ -17,6 +18,7 @@ namespace LoccarTests
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            OnSendAsync?.Invoke(request);
             return Task.FromResult(_response);
         }
     }

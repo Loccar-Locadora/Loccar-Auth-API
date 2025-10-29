@@ -12,6 +12,7 @@ using LoccarDomain.User;
 using LoccarInfra.Interfaces;
 using LoccarInfra.ORM.model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,7 +21,7 @@ public class AuthApplication : IAuthApplication
 {
     private readonly IConfiguration _config;
     private readonly IAuthRepository _authRepository;
-    private readonly string _loccarApi;
+    private readonly string? _loccarApi;
     private readonly HttpClient _httpClient;
 
     public AuthApplication(IConfiguration config, IAuthRepository authRepository, HttpClient httpClient)
@@ -45,12 +46,16 @@ public class AuthApplication : IAuthApplication
                 return baseReturn;
             }
 
-            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? string.Empty);
+
+            // Corrige o acesso aos roles
+            var roles = user.Roles?.FirstOrDefault()?.Name ?? "User";
 
             var claims = new[]
             {
                 new KeyValuePair<string, string>("name", user.Username),
-                new KeyValuePair<string, string>("id", user.Id.ToString())
+                new KeyValuePair<string, string>("id", user.Id.ToString()),
+                new KeyValuePair<string, string>("role", roles)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -96,9 +101,11 @@ public class AuthApplication : IAuthApplication
                     Username = request.Username,
                     Email = request.Email,
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    
+                    Roles = new List<Role> { new Role { Id = 1 } } // Apenas o Id já basta
                 };
+
                 await _authRepository.RegisterUser(user);
+
                 UserData userData = new UserData()
                 {
                     Username = request.Username,

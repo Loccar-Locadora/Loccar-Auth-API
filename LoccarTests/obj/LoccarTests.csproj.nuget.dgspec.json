@@ -103,6 +103,125 @@
         }
       }
     },
+    "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
+        "projectName": "LoccarWebapi",
+        "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
+        "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\barre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\trabalho\\pagglo\\codigo-fonte\\deploy\\pagglo_sdk": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj": {
+                "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj"
+              },
+              "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj": {
+                "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj"
+              },
+              "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj": {
+                "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.20, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[10.0.0-rc.1.25451.107, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.14.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -327,6 +446,9 @@
               "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj": {
                 "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj"
               },
+              "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj": {
+                "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj"
+              },
               "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj": {
                 "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj"
               },
@@ -352,9 +474,21 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "FluentAssertions": {
               "target": "Package",
               "version": "[8.7.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.9, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",

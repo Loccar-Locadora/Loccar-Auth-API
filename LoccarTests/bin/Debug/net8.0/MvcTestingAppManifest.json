@@ -1,0 +1,6 @@
+{
+  "LoccarApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication",
+  "LoccarDomain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain",
+  "LoccarInfra, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarInfra",
+  "LoccarWebapi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth"
+}

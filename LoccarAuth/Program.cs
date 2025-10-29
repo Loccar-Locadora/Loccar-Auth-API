@@ -35,13 +35,6 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Repositório e Application Service - Scoped
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IAuthApplication, AuthApplication>();
-builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
-builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -72,6 +65,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthApplication, AuthApplication>();
+builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
+builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -88,3 +87,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Tornar a classe Program pública para testes
+public partial class Program { }

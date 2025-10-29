@@ -11,6 +11,10 @@ class Locatario {
   +telefone : string
   +cnh : string
   +created : datetime
+  --
+  +cadastrar() : void
+  +atualizarDados() : void
+  +consultarReservas() : List<Reserva>
 }
 
 class Reserva {
@@ -26,6 +30,10 @@ class Reserva {
   +valorSeguroCarro : decimal
   +valorImposto : decimal
   +seguroCarro : bool
+  --
+  +calcularValorTotal() : decimal
+  +confirmarReserva() : void
+  +cancelarReserva() : void
 }
 
 class Veiculo {
@@ -40,6 +48,10 @@ class Veiculo {
   +valorDiariaEmpresa : decimal
   +valorDiariaMensal : decimal
   +valorDiariaReduzida : decimal
+  --
+  +verDisponibilidade() : bool
+  +calcularPrecoDiaria(tipo : string) : decimal
+  +registrarManutencao() : void
 }
 
 ' ============================
@@ -50,6 +62,8 @@ class Veiculo_Carga {
   +tipoCarga : string
   +tara : decimal
   +tamanhoCompartimentoCarga : string
+  --
+  +carregar(carga : decimal) : bool
 }
 
 class Veiculo_Passeio {
@@ -57,6 +71,9 @@ class Veiculo_Passeio {
   +automatico : bool
   +direcaoHidraulica : bool
   +arCondicionado : bool
+  --
+  +ativarArCondicionado() : void
+  +trocarMarchaAutomatico() : void
 }
 
 class Veiculo_Passageiro {
@@ -64,12 +81,18 @@ class Veiculo_Passageiro {
   +televisao : bool
   +arCondicionado : bool
   +direcaoHidraulica : bool
+  --
+  +ligarTelevisao() : void
+  +regularArCondicionado() : void
 }
 
 class Motocicleta {
   +controleTracao : bool
   +freioAbs : bool
   +pilotoAutomatico : bool
+  --
+  +ativarControleTracao() : void
+  +ativarPilotoAutomatico() : void
 }
 
 ' ============================

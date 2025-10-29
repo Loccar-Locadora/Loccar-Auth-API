@@ -13,169 +13,176 @@ using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
-public class AuthApplicationTests
+namespace LoccarTests
 {
-    private readonly Mock<IAuthRepository> _authRepoMock;
-    private readonly IConfiguration _configuration;
-    private readonly AuthApplication _authApp;
-    private readonly HttpClient _httpClient;
-
-    public AuthApplicationTests()
+    /// <summary>
+    /// Legacy tests - kept for backward compatibility
+    /// For new tests, see AuthApplicationParameterizedTests, AuthApplicationUnitTests, etc.
+    /// </summary>
+    public class AuthApplicationTests
     {
-        _authRepoMock = new Mock<IAuthRepository>();
-        _httpClient = new HttpClient();
+        private readonly Mock<IAuthRepository> _authRepoMock;
+        private readonly IConfiguration _configuration;
+        private readonly AuthApplication _authApp;
+        private readonly HttpClient _httpClient;
 
-        var inMemorySettings = new Dictionary<string, string> {
-            {"Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890"},
-            {"Jwt:Issuer", "Loccar"},
-            {"Jwt:Audience", "Loccar"}
-        };
-        _configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(inMemorySettings)
-            .Build();
-
-        _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
-    }
-
-    #region Register Tests
-
-    [Fact]
-    public async Task Register_ShouldReturn201_WhenUserDoesNotExist()
-    {
-        var request = new RegisterRequest
+        public AuthApplicationTests()
         {
-            Email = "teste@email.com",
-            Username = "Teste",
-            Password = "123456",
-            Cnh = "12345678901",
-            CellPhone = "61999999999"
-        };
+            _authRepoMock = new Mock<IAuthRepository>();
+            _httpClient = new HttpClient();
 
-        _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
-                     .ReturnsAsync((User)null);
+            var inMemorySettings = new Dictionary<string, string> {
+                {"Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890"},
+                {"Jwt:Issuer", "Loccar"},
+                {"Jwt:Audience", "Loccar"}
+            };
+            _configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
 
-        _authRepoMock.Setup(r => r.RegisterUser(It.IsAny<User>()))
-                     .Returns(Task.CompletedTask);
+            _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
+        }
 
-        // Cria um HttpClient fake que sempre retorna Created
-        var fakeResponse = new HttpResponseMessage(System.Net.HttpStatusCode.Created);
-        var fakeHandler = new FakeHttpMessageHandler(fakeResponse);
-        var httpClient = new HttpClient(fakeHandler);
+        #region Register Tests
 
-        var config = new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string> { { "LoccarApi:BaseUrl", "http://fake-api" } })
-            .Build();
-
-        var _authApp = new AuthApplication(config, _authRepoMock.Object, httpClient);
-
-        // Act
-        var result = await _authApp.Register(request);
-
-        // Assert
-        result.Code.Should().Be("201");
-        result.Message.Should().Be("Usuário cadastrado com sucesso!");
-        result.Data.Username.Should().Be("Teste");
-        result.Data.Email.Should().Be("teste@email.com");
-    }
-
-
-    [Fact]
-    public async Task Register_ShouldReturn400_WhenUserAlreadyExists()
-    {
-        // Arrange
-        var request = new RegisterRequest
+        [Fact]
+        public async Task Register_ShouldReturn201_WhenUserDoesNotExist()
         {
-            Email = "teste@email.com",
-            Username = "Teste",
-            Password = "123456"
-        };
+            var request = new RegisterRequest
+            {
+                Email = "teste@email.com",
+                Username = "Teste",
+                Password = "123456",
+                Cnh = "12345678901",
+                CellPhone = "61999999999"
+            };
 
-        _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
-                     .ReturnsAsync(new User { Email = request.Email });
+            _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
+                         .ReturnsAsync((User)null);
 
-        // Act
-        var result = await _authApp.Register(request);
+            _authRepoMock.Setup(r => r.RegisterUser(It.IsAny<User>()))
+                         .Returns(Task.CompletedTask);
 
-        // Assert
-        result.Code.Should().Be("400");
-        result.Message.Should().Be("Já existe um usuário com esse email");
-        result.Data.Should().BeNull();
-    }
+            // Cria um HttpClient fake que sempre retorna Created
+            var fakeResponse = new HttpResponseMessage(System.Net.HttpStatusCode.Created);
+            var fakeHandler = new FakeHttpMessageHandler(fakeResponse);
+            var httpClient = new HttpClient(fakeHandler);
 
-    #endregion
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string> { { "LoccarApi:BaseUrl", "http://fake-api" } })
+                .Build();
 
-    #region Login Tests
+            var _authApp = new AuthApplication(config, _authRepoMock.Object, httpClient);
 
-    [Fact]
-    public async Task Login_ShouldReturn200_WithToken_WhenCredentialsAreCorrect()
-    {
-        // Arrange
-        var password = "123456";
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            // Act
+            var result = await _authApp.Register(request);
 
-        _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
-                     .ReturnsAsync(new User { Id = 1, Username = "Teste", Email = "teste@email.com", PasswordHash = hashedPassword });
+            // Assert
+            result.Code.Should().Be("201");
+            result.Message.Should().Be("Usuário cadastrado com sucesso!");
+            result.Data.Username.Should().Be("Teste");
+            result.Data.Email.Should().Be("teste@email.com");
+        }
 
-        var request = new LoginRequest
+
+        [Fact]
+        public async Task Register_ShouldReturn400_WhenUserAlreadyExists()
         {
-            Email = "teste@email.com",
-            Password = password
-        };
+            // Arrange
+            var request = new RegisterRequest
+            {
+                Email = "teste@email.com",
+                Username = "Teste",
+                Password = "123456"
+            };
 
-        // Act
-        var result = await _authApp.Login(request);
+            _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
+                         .ReturnsAsync(new User { Email = request.Email });
 
-        // Assert
-        result.Code.Should().Be("200");
-        result.Message.Should().Be("Usuário logado com sucesso");
-        result.Data.Should().NotBeNullOrEmpty();
-    }
+            // Act
+            var result = await _authApp.Register(request);
 
-    [Fact]
-    public async Task Login_ShouldReturn401_WhenUserDoesNotExist()
-    {
-        // Arrange
-        _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
-                     .ReturnsAsync((User)null);
+            // Assert
+            result.Code.Should().Be("400");
+            result.Message.Should().Be("Já existe um usuário com esse email");
+            result.Data.Should().BeNull();
+        }
 
-        var request = new LoginRequest
+        #endregion
+
+        #region Login Tests
+
+        [Fact]
+        public async Task Login_ShouldReturn200_WithToken_WhenCredentialsAreCorrect()
         {
-            Email = "teste@email.com",
-            Password = "123456"
-        };
+            // Arrange
+            var password = "123456";
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-        // Act
-        var result = await _authApp.Login(request);
+            _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
+                         .ReturnsAsync(new User { Id = 1, Username = "Teste", Email = "teste@email.com", PasswordHash = hashedPassword });
 
-        // Assert
-        result.Code.Should().Be("401");
-        result.Message.Should().Be("Usuário não autorizado");
-        result.Data.Should().BeNull();
-    }
+            var request = new LoginRequest
+            {
+                Email = "teste@email.com",
+                Password = password
+            };
 
-    [Fact]
-    public async Task Login_ShouldReturn401_WhenPasswordIsIncorrect()
-    {
-        // Arrange
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword("senha_correta");
+            // Act
+            var result = await _authApp.Login(request);
 
-        _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
-                     .ReturnsAsync(new User { Id = 1, Username = "Teste", Email = "teste@email.com", PasswordHash = hashedPassword });
+            // Assert
+            result.Code.Should().Be("200");
+            result.Message.Should().Be("Usuário logado com sucesso");
+            result.Data.Should().NotBeNullOrEmpty();
+        }
 
-        var request = new LoginRequest
+        [Fact]
+        public async Task Login_ShouldReturn401_WhenUserDoesNotExist()
         {
-            Email = "teste@email.com",
-            Password = "senha_errada"
-        };
+            // Arrange
+            _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
+                         .ReturnsAsync((User)null);
 
-        // Act
-        var result = await _authApp.Login(request);
+            var request = new LoginRequest
+            {
+                Email = "teste@email.com",
+                Password = "123456"
+            };
 
-        // Assert
-        result.Code.Should().Be("401");
-        result.Message.Should().Be("Usuário não autorizado");
-        result.Data.Should().BeNull();
+            // Act
+            var result = await _authApp.Login(request);
+
+            // Assert
+            result.Code.Should().Be("401");
+            result.Message.Should().Be("Usuário não autorizado");
+            result.Data.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Login_ShouldReturn401_WhenPasswordIsIncorrect()
+        {
+            // Arrange
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword("senha_correta");
+
+            _authRepoMock.Setup(r => r.FindUserByEmail("teste@email.com"))
+                         .ReturnsAsync(new User { Id = 1, Username = "Teste", Email = "teste@email.com", PasswordHash = hashedPassword });
+
+            var request = new LoginRequest
+            {
+                Email = "teste@email.com",
+                Password = "senha_errada"
+            };
+
+            // Act
+            var result = await _authApp.Login(request);
+
+            // Assert
+            result.Code.Should().Be("401");
+            result.Message.Should().Be("Usuário não autorizado");
+            result.Data.Should().BeNull();
+        }
+
+        #endregion
     }
-
-    #endregion
 }

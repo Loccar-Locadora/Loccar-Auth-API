@@ -18,15 +18,39 @@ namespace LoccarInfra.Repositories
         }
         public async Task RegisterUser(User tbUser)
         {
+            // Se o usuário veio com roles só com o Id, precisamos "attachar"
+            if (tbUser.Roles != null)
+            {
+                var attachedRoles = new List<Role>();
+
+                foreach (var role in tbUser.Roles)
+                {
+                    if (role.Id != 0)
+                    {
+                        // cria um stub com o Id e anexa ao contexto
+                        var roleStub = new Role { Id = role.Id };
+                        _dbContext.Roles.Attach(roleStub);
+                        attachedRoles.Add(roleStub);
+                    }
+                }
+
+                // substitui as roles pelo que está devidamente trackeado
+                tbUser.Roles = attachedRoles;
+            }
+
             await _dbContext.Users.AddAsync(tbUser);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<User> FindUserByEmail(string email)
+
+        public async Task<User?> FindUserByEmail(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                return null;
+                
             return await _dbContext.Users
-                                   .Where(n => n.Email.Equals(email))
-                                   .FirstOrDefaultAsync();
+                .Include(u => u.Roles) // Incluir os roles na consulta
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
         }
 
     }

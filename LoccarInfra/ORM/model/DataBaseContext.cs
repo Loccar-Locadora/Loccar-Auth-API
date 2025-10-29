@@ -23,8 +23,7 @@ public partial class DataBaseContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {}
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuditLog>(entity =>
@@ -96,8 +95,6 @@ public partial class DataBaseContext : DbContext
 
             entity.HasIndex(e => e.Email, "users_email_key").IsUnique();
 
-            entity.HasIndex(e => e.Username, "users_username_key").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
@@ -135,9 +132,6 @@ public partial class DataBaseContext : DbContext
                         j.IndexerProperty<int>("RoleId").HasColumnName("role_id");
                     });
         });
-        modelBuilder.HasSequence("locatario_idlocatario_seq");
-        modelBuilder.HasSequence("reserva_numeroreserva_seq");
-        modelBuilder.HasSequence("veiculo_idveiculo_seq");
 
         OnModelCreatingPartial(modelBuilder);
     }

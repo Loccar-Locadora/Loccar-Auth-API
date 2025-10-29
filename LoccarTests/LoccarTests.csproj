@@ -10,11 +10,14 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="FluentAssertions" Version="8.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,5 +28,6 @@
 	    <ProjectReference Include="..\LoccarApplication\LoccarApplication.csproj" />
 	    <ProjectReference Include="..\LoccarInfra\LoccarInfra.csproj" />
 	    <ProjectReference Include="..\LoccarDomain\LoccarDomain.csproj" />
+	    <ProjectReference Include="..\LoccarAuth\LoccarWebapi.csproj" />
     </ItemGroup>
 </Project>
