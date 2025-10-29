@@ -25,7 +25,7 @@ jobs:
         dotnet-version: '8.0.x'
         
     - name: Cache NuGet packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -99,7 +99,7 @@ jobs:
         echo "Note: WebApplicationFactory integration tests are excluded due to EF provider conflicts"
 
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-results
@@ -162,7 +162,7 @@ jobs:
       run: dotnet publish LoccarAuth/LoccarWebapi.csproj --configuration Release --no-build --output ./publish
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: published-app
         path: ./publish/
