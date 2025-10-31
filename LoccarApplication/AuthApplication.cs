@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -49,20 +49,25 @@ public class AuthApplication : IAuthApplication
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? string.Empty);
 
             // Corrige o acesso aos roles
-            var roles = user.Roles?.FirstOrDefault()?.Name ?? "User";
+            var roles = user.Roles?.Select(n => n.Name) ?? ["CLIENT_USER"];
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new KeyValuePair<string, string>("name", user.Username),
-                new KeyValuePair<string, string>("id", user.Id.ToString()),
-                new KeyValuePair<string, string>("role", roles)
+                new Claim("name", user.Username),
+                new Claim("id", user.Id.ToString())
             };
+
+            // Adiciona cada role como um claim separado
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim("role", role));
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
-                claims: claims.Select(c => new System.Security.Claims.Claim(c.Key, c.Value)),
+                claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(key),
@@ -110,14 +115,14 @@ public class AuthApplication : IAuthApplication
                 {
                     Username = request.Username,
                     Email = request.Email,
-                    Cnh = request.Cnh,
+                    DriverLicense = request.DriverLicense,
                     Cellphone = request.CellPhone
                 };
 
                 var json = JsonSerializer.Serialize(userData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(_loccarApi + "/locatario/register", content);
+                var response = await _httpClient.PostAsync(_loccarApi + "/customer/register", content);
 
                 if (!response.IsSuccessStatusCode)
                 {

@@ -5068,11 +5068,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
+      "projectUniqueName": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
       "projectName": "LoccarWebapi",
-      "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
+      "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
       "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\obj\\",
+      "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarAuth\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5094,14 +5094,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj": {
-              "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj"
+            "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj": {
+              "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj"
             },
-            "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj": {
-              "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj"
+            "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj": {
+              "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj"
             },
-            "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj": {
-              "projectPath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj"
+            "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj": {
+              "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj"
             }
           }
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,7 +50,7 @@ namespace LoccarInfra.Repositories
                 
             return await _dbContext.Users
                 .Include(u => u.Roles) // Incluir os roles na consulta
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower() && u.IsActive.Equals(true));
         }
 
     }

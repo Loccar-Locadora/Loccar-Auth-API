@@ -1,4 +1,5 @@
-﻿services:
+services:
+  # PostgreSQL Database
   db:
     image: postgres:16
     container_name: loccar-db
@@ -11,6 +12,37 @@
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d loccardb"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - loccar-network
+
+  # .NET Web API
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: loccar-api
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=db;Port=5432;Database=loccardb;User Id=postgres;Password=postgres;Pooling=true;
+    ports:
+      - "5000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - loccar-network
+
+networks:
+  loccar-network:
+    driver: bridge
 
 volumes:
   postgres_data:

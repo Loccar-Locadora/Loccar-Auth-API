@@ -1,29 +1,53 @@
-﻿version: "3.9"
+version: "3.9"
 
 services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16
+    container_name: loccar-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: loccardb_auth
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d loccardb_auth"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - loccar-network
+
+  # .NET Web API
   loccar-locadora:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: loccar-locadora-auth
+    restart: always
     ports:
       - "5002:8081"
     environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5433;Database=loccardb_auth;Username=postgres;Password=postgres
-    # depends_on:
-    #   - db
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8081
+      - ConnectionStrings__DefaultConnection=Server=db;Port=5432;Database=loccardb_auth;User Id=postgres;Password=postgres;Pooling=true;
+      - Jwt__Issuer=http://localhost
+      - Jwt__Audience=http://localhost
+      - Jwt__Key=7c83ca9b462e5932a0c506fee8cec2ac38edef8c1fec346c0eeb8471ad7bf84d
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - loccar-network
 
-  # db:
-  #   image: postgres:16
-  #   container_name: postgres-locadora-auth
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: loccardb_auth
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
+networks:
+  loccar-network:
+    driver: bridge
 
 volumes:
   postgres_data:

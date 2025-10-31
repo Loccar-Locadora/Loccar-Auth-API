@@ -23,3 +23,16 @@ C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\ne
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.pdb
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\ref\LoccarDomain.dll
 C:\Users\barre\source\repos\LoccarAuth\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.sourcelink.json
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\bin\Debug\net8.0\LoccarDomain.deps.json
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\bin\Debug\net8.0\LoccarDomain.dll
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\bin\Debug\net8.0\LoccarDomain.pdb
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.csproj.AssemblyReference.cache
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.AssemblyInfoInputs.cache
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.AssemblyInfo.cs
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.csproj.CoreCompileInputs.cache
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.sourcelink.json
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.dll
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\refint\LoccarDomain.dll
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.pdb
+C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\ref\LoccarDomain.dll

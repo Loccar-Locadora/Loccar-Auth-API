@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D6SD/EO7DGA=",
+  "dgSpecHash": "O/gBX1uzefY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\barre\\source\\repos\\LoccarAuth\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
+  "projectFilePath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\barre\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
