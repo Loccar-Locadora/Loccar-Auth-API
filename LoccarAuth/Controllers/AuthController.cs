@@ -6,28 +6,31 @@ using LoccarDomain.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Authorize]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace LoccarAuth.Controllers
 {
-    private readonly IAuthApplication _authApplication;
-    public AuthController(IAuthApplication authApplication)
+    [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
-        _authApplication = authApplication;
-    }
+        private readonly IAuthApplication _authApplication;
+        public AuthController(IAuthApplication authApplication)
+        {
+            _authApplication = authApplication;
+        }
 
-    [AllowAnonymous]
-    [HttpPost("login")]
-    public async Task<BaseReturn<string>> Login(LoginRequest request)
-    {
-        return await _authApplication.Login(request);
-    }
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<BaseReturn<string>> Login(LoginRequest request)
+        {
+            return await _authApplication.Login(request);
+        }
 
-    [AllowAnonymous]
-    [HttpPost("register")]
-    public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
-    {
-        return await _authApplication.Register(request);
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
+        {
+            return await _authApplication.Register(request);
+        }
     }
 }

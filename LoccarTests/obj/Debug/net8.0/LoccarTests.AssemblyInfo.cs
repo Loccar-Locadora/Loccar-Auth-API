@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LoccarTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cddc024b181618c87902bea0c4f7e5a5a699afe2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55d5282c80ac97831fd698321c900322da875d93")]
 [assembly: System.Reflection.AssemblyProductAttribute("LoccarTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LoccarTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -478,7 +478,6 @@ C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwe
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWe.F3A66E0D.Up2Date
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.dll
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\refint\LoccarWebapi.dll

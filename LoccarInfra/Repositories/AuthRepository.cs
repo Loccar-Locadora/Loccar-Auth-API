@@ -18,6 +18,10 @@ namespace LoccarInfra.Repositories
         }
         public async Task RegisterUser(User tbUser)
         {
+            // Definir IsActive como true por padrão se não foi especificado
+            if (tbUser.IsActive == null)
+                tbUser.IsActive = true;
+
             // Se o usuário veio com roles só com o Id, precisamos "attachar"
             if (tbUser.Roles != null)
             {
@@ -50,7 +54,7 @@ namespace LoccarInfra.Repositories
                 
             return await _dbContext.Users
                 .Include(u => u.Roles) // Incluir os roles na consulta
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower() && u.IsActive.Equals(true));
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower() && (u.IsActive == true || u.IsActive == null));
         }
 
     }
