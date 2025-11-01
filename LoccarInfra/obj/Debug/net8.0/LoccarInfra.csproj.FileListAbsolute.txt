@@ -42,4 +42,3 @@ C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarInfra\obj\Debug\net8.0\refint\
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarInfra\obj\Debug\net8.0\LoccarInfra.pdb
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarInfra\obj\Debug\net8.0\LoccarInfra.genruntimeconfig.cache
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarInfra\obj\Debug\net8.0\ref\LoccarInfra.dll
-C:\Users\barre\source\repos\Loccar-Auth-API\LoccarInfra\bin\Debug\net8.0\.xml
