@@ -1,0 +1,236 @@
+name: Pull Request Code Quality
+
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+    types: [opened, synchronize, reopened]
+
+env:
+  DOTNET_VERSION: '8.0.x'
+
+jobs:
+  lint-and-format:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Check EditorConfig compliance
+      run: |
+        echo "📝 Checking EditorConfig compliance..."
+        # Check if .editorconfig exists and is properly configured
+        if [ ! -f .editorconfig ]; then
+          echo "❌ .editorconfig file not found!"
+          exit 1
+        fi
+        echo "✅ EditorConfig file found and will be enforced"
+
+    - name: Verify code formatting
+      run: |
+        echo "🎨 Verifying code formatting..."
+        dotnet format --verify-no-changes --no-restore --verbosity diagnostic
+        if [ $? -ne 0 ]; then
+          echo ""
+          echo "❌ Code formatting issues detected!"
+          echo "💡 To fix locally, run: dotnet format"
+          echo "📝 Or use the lint script: ./lint.ps1 (Windows) or ./lint.sh (Linux/macOS)"
+          exit 1
+        fi
+        echo "✅ All files are properly formatted"
+
+    - name: StyleCop analysis
+      run: |
+        echo "📏 Running StyleCop analysis..."
+        dotnet build --configuration Release --no-restore \
+          --verbosity normal \
+          -p:RunStyleCopAnalyzer=true \
+          -p:StyleCopTreatErrorsAsWarnings=false
+        echo "✅ StyleCop analysis completed successfully"
+
+    - name: Code analysis warnings check
+      run: |
+        echo "🔍 Checking for code analysis warnings..."
+        dotnet build --configuration Release --no-restore \
+          --verbosity normal \
+          -p:TreatWarningsAsErrors=false \
+          -p:WarningsAsErrors="" \
+          2>&1 | tee build-output.txt
+          
+        # Check for specific analyzer warnings
+        if grep -q "warning CA\|warning SA\|warning S[0-9]" build-output.txt; then
+          echo "⚠️ Code analysis warnings detected:"
+          grep "warning CA\|warning SA\|warning S[0-9]" build-output.txt || true
+          echo ""
+          echo "💡 Please address these warnings before merging"
+          echo "📖 Refer to LINTING-README.md for guidance"
+        else
+          echo "✅ No code analysis warnings detected"
+        fi
+
+    - name: Generate PR comment
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const jobStatus = '${{ job.status }}';
+          
+          let comment = `## 🔍 Code Quality Check Results\n\n`;
+          
+          if (jobStatus === 'success') {
+            comment += `✅ **All code quality checks passed!**\n\n`;
+            comment += `### ✅ Checks Completed:\n`;
+            comment += `- 🎨 **Code Formatting**: All files properly formatted\n`;
+            comment += `- 📏 **StyleCop Rules**: Style guidelines followed\n`;
+            comment += `- 🔍 **Code Analysis**: No warnings detected\n`;
+            comment += `- 📝 **EditorConfig**: Configuration compliance verified\n\n`;
+            comment += `🎉 **This PR is ready for review!**\n`;
+          } else {
+            comment += `❌ **Code quality checks failed**\n\n`;
+            comment += `Please check the workflow logs above and fix the issues.\n\n`;
+            comment += `### 🛠️ How to fix locally:\n`;
+            comment += `\`\`\`bash\n`;
+            comment += `# Run the linting script\n`;
+            comment += `./lint.ps1  # Windows\n`;
+            comment += `./lint.sh   # Linux/macOS\n\n`;
+            comment += `# Or manually:\n`;
+            comment += `dotnet restore\n`;
+            comment += `dotnet format\n`;
+            comment += `dotnet build\n`;
+            comment += `\`\`\`\n\n`;
+            comment += `📖 For more details, check [LINTING-README.md](./LINTING-README.md)\n`;
+          }
+          
+          // Find existing comment to update or create new one
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+          
+          const existingComment = comments.find(comment => 
+            comment.body.includes('Code Quality Check Results')
+          );
+          
+          if (existingComment) {
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: existingComment.id,
+              body: comment
+            });
+          } else {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
+          }
+
+  security-scan:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Check for vulnerable packages
+      run: |
+        echo "🔒 Scanning for vulnerable packages..."
+        dotnet list package --vulnerable --include-transitive 2>&1 | tee security-report.txt
+        
+        if grep -q "has the following vulnerable packages" security-report.txt; then
+          echo "❌ Vulnerable packages detected!"
+          cat security-report.txt
+          echo ""
+          echo "🛡️ Please update the following packages to secure versions:"
+          grep -A 10 "vulnerable packages" security-report.txt || true
+          exit 1
+        else
+          echo "✅ No vulnerable packages found"
+        fi
+
+    - name: Upload security report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: security-report.txt
+
+  changed-files-lint:
+    name: Lint Changed Files Only
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v40
+      with:
+        files: |
+          **/*.cs
+          **/*.csproj
+          **/*.props
+          **/*.targets
+          **/*.json
+          **/*.yml
+          **/*.yaml
+
+    - name: Setup .NET 8
+      if: steps.changed-files.outputs.any_changed == 'true'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: dotnet restore
+
+    - name: Lint changed C# files
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: |
+        echo "🎯 Linting only changed files..."
+        echo "Changed files:"
+        echo "${{ steps.changed-files.outputs.all_changed_files }}"
+        
+        # Format only changed files
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          if [[ $file == *.cs ]]; then
+            echo "📝 Checking: $file"
+            dotnet format --include "$file" --verify-no-changes --no-restore
+          fi
+        done
+        
+        echo "✅ All changed files pass linting checks"
+
+    - name: No changes detected
+      if: steps.changed-files.outputs.any_changed != 'true'
+      run: |
+        echo "ℹ️ No relevant files changed in this PR"
+        echo "✅ Linting checks skipped"

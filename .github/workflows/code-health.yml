@@ -1,0 +1,243 @@
+name: Scheduled Code Health Check
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  DOTNET_VERSION: '8.0.x'
+
+jobs:
+  dependency-audit:
+    name: Dependency Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Check for vulnerable packages
+      run: |
+        echo "🔒 Weekly security audit..."
+        dotnet list package --vulnerable --include-transitive 2>&1 | tee weekly-security-report.txt
+        
+        if grep -q "has the following vulnerable packages" weekly-security-report.txt; then
+          echo "⚠️ Vulnerable packages found during weekly audit!"
+          cat weekly-security-report.txt
+          
+          # Create issue if vulnerabilities found
+          echo "Creating GitHub issue for security vulnerabilities..."
+          echo "vulnerable_packages_found=true" >> $GITHUB_OUTPUT
+        else
+          echo "✅ No vulnerabilities found in weekly audit"
+          echo "vulnerable_packages_found=false" >> $GITHUB_OUTPUT
+        fi
+      id: security-check
+
+    - name: Check for outdated packages
+      run: |
+        echo "📦 Checking for outdated packages..."
+        dotnet list package --outdated 2>&1 | tee outdated-packages-report.txt
+        
+        if grep -q "The following sources were used" outdated-packages-report.txt && 
+           grep -q ">" outdated-packages-report.txt; then
+          echo "📋 Outdated packages found"
+          echo "outdated_packages_found=true" >> $GITHUB_OUTPUT
+        else
+          echo "✅ All packages are up to date"
+          echo "outdated_packages_found=false" >> $GITHUB_OUTPUT
+        fi
+      id: outdated-check
+
+    - name: Create security issue
+      if: steps.security-check.outputs.vulnerable_packages_found == 'true'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('weekly-security-report.txt', 'utf8');
+          
+          const issueTitle = '🔒 Security Alert: Vulnerable Dependencies Detected';
+          const issueBody = `
+          ## 🚨 Weekly Security Audit Alert
+          
+          Our scheduled security audit has detected vulnerable packages in the project.
+          
+          ### 📋 Security Report
+          \`\`\`
+          ${report}
+          \`\`\`
+          
+          ### 🛠️ Action Required
+          - [ ] Review the vulnerable packages listed above
+          - [ ] Update to secure versions of affected packages
+          - [ ] Test the application after updates
+          - [ ] Verify all tests still pass
+          
+          ### 📖 How to Fix
+          1. Update packages using: \`dotnet add package <PackageName> --version <SecureVersion>\`
+          2. Run the linting script: \`./lint.ps1\` or \`./lint.sh\`
+          3. Ensure all tests pass: \`dotnet test\`
+          
+          **Priority:** High - Security vulnerabilities should be addressed promptly.
+          
+          *This issue was automatically created by the scheduled security audit workflow.*
+          `;
+          
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: issueTitle,
+            body: issueBody,
+            labels: ['security', 'dependencies', 'high-priority']
+          });
+
+    - name: Create outdated packages issue
+      if: steps.outdated-check.outputs.outdated_packages_found == 'true'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('outdated-packages-report.txt', 'utf8');
+          
+          const issueTitle = '📦 Maintenance: Outdated Packages Detected';
+          const issueBody = `
+          ## 📦 Weekly Dependency Maintenance
+          
+          Our scheduled audit has found outdated packages that could be updated.
+          
+          ### 📋 Outdated Packages Report
+          \`\`\`
+          ${report}
+          \`\`\`
+          
+          ### 🛠️ Recommended Actions
+          - [ ] Review the outdated packages listed above
+          - [ ] Update to latest stable versions (check for breaking changes)
+          - [ ] Test thoroughly after updates
+          - [ ] Update documentation if APIs changed
+          
+          ### 📖 How to Update
+          1. Update packages: \`dotnet add package <PackageName>\`
+          2. Review release notes for breaking changes
+          3. Run linting: \`./lint.ps1\` or \`./lint.sh\`
+          4. Run all tests: \`dotnet test\`
+          
+          **Priority:** Low - Consider updating during next maintenance window.
+          
+          *This issue was automatically created by the scheduled maintenance workflow.*
+          `;
+          
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: issueTitle,
+            body: issueBody,
+            labels: ['maintenance', 'dependencies', 'enhancement']
+          });
+
+    - name: Upload audit reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: weekly-audit-reports
+        path: |
+          weekly-security-report.txt
+          outdated-packages-report.txt
+
+  code-metrics:
+    name: Code Quality Metrics
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Generate code metrics
+      run: |
+        echo "📊 Generating code quality metrics..."
+        
+        # Count lines of code
+        echo "## 📈 Code Metrics Report" > metrics-report.md
+        echo "" >> metrics-report.md
+        echo "Generated on: $(date)" >> metrics-report.md
+        echo "" >> metrics-report.md
+        
+        # C# files statistics
+        cs_files=$(find . -name "*.cs" -not -path "./bin/*" -not -path "./obj/*" | wc -l)
+        cs_lines=$(find . -name "*.cs" -not -path "./bin/*" -not -path "./obj/*" -exec wc -l {} \; | awk '{sum += $1} END {print sum}')
+        
+        echo "### 📁 Project Statistics" >> metrics-report.md
+        echo "- **C# Files:** $cs_files" >> metrics-report.md
+        echo "- **Total Lines of C# Code:** $cs_lines" >> metrics-report.md
+        echo "- **Average Lines per File:** $((cs_lines / cs_files))" >> metrics-report.md
+        echo "" >> metrics-report.md
+        
+        # Project breakdown
+        echo "### 🏗️ Project Breakdown" >> metrics-report.md
+        for project in LoccarAuth LoccarApplication LoccarDomain LoccarInfra LoccarTests; do
+          if [ -d "$project" ]; then
+            project_files=$(find "$project" -name "*.cs" | wc -l)
+            project_lines=$(find "$project" -name "*.cs" -exec wc -l {} \; | awk '{sum += $1} END {print sum}')
+            echo "- **$project:** $project_files files, $project_lines lines" >> metrics-report.md
+          fi
+        done
+        
+        echo "" >> metrics-report.md
+        echo "### 🧪 Test Coverage" >> metrics-report.md
+        echo "- Run \`dotnet test --collect:\"XPlat Code Coverage\"\` for detailed coverage" >> metrics-report.md
+        echo "" >> metrics-report.md
+        echo "### 🔧 Code Quality Tools Active" >> metrics-report.md
+        echo "- ✅ StyleCop Analyzers" >> metrics-report.md
+        echo "- ✅ Microsoft Code Analysis" >> metrics-report.md
+        echo "- ✅ SonarAnalyzer" >> metrics-report.md
+        echo "- ✅ EditorConfig" >> metrics-report.md
+        
+        cat metrics-report.md
+
+    - name: Upload metrics report
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-metrics-report
+        path: metrics-report.md
+
+    - name: Summary
+      run: |
+        echo "### 📊 Weekly Code Health Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **Automated health check completed**" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📋 **Checks performed:**" >> $GITHUB_STEP_SUMMARY
+        echo "- Security vulnerability scan" >> $GITHUB_STEP_SUMMARY
+        echo "- Outdated packages detection" >> $GITHUB_STEP_SUMMARY
+        echo "- Code metrics analysis" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📁 **Reports available in artifacts**" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ steps.security-check.outputs.vulnerable_packages_found }}" == "true" ]; then
+          echo "⚠️ **Action required:** Security vulnerabilities detected - check issues" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "🔒 **Security:** No vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+        fi
