@@ -21,6 +21,25 @@ namespace LoccarTests
         private readonly HttpClient _httpClient;
         private readonly AuthApplication _authApp;
 
+        public ParametrizedTests()
+        {
+            _authRepoMock = new Mock<IAuthRepository>();
+
+            var inMemorySettings = new Dictionary<string, string?>
+            {
+                { "Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890" },
+                { "Jwt:Issuer", "Loccar" },
+                { "Jwt:Audience", "Loccar" },
+                { "LoccarApi:BaseUrl", "http://fake-api" },
+            };
+            _configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            _httpClient = MockHttpClientFactory.CreateSuccessClient();
+            _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
+        }
+
         public static IEnumerable<object[]> ValidRegisterData()
         {
             yield return new object[]
@@ -55,25 +74,6 @@ namespace LoccarTests
                 "201",
                 "Usuario cadastrado com sucesso!",
             };
-        }
-
-        public ParametrizedTests()
-        {
-            _authRepoMock = new Mock<IAuthRepository>();
-
-            var inMemorySettings = new Dictionary<string, string?>
-            {
-                { "Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890" },
-                { "Jwt:Issuer", "Loccar" },
-                { "Jwt:Audience", "Loccar" },
-                { "LoccarApi:BaseUrl", "http://fake-api" },
-            };
-            _configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
-                .Build();
-
-            _httpClient = MockHttpClientFactory.CreateSuccessClient();
-            _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
         }
 
         [Theory]
