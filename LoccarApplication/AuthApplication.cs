@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-
 public class AuthApplication : IAuthApplication
 {
     private readonly IConfiguration _config;
@@ -26,14 +26,19 @@ public class AuthApplication : IAuthApplication
 
     public AuthApplication(IConfiguration config, IAuthRepository authRepository, HttpClient httpClient)
     {
-        _config = config;
-        _authRepository = authRepository;
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+        _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
         _loccarApi = config["LoccarApi:BaseUrl"];
-        _httpClient = httpClient;
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
 
-    public async Task<BaseReturn<string>> Login(LoginRequest loginRequest)
+    public async Task<BaseReturn<string>> LoginAsync(LoginRequest loginRequest)
     {
+        if (loginRequest == null)
+        {
+            throw new ArgumentNullException(nameof(loginRequest));
+        }
+
         BaseReturn<string> baseReturn = new BaseReturn<string>();
 
         try
@@ -54,7 +59,7 @@ public class AuthApplication : IAuthApplication
             var claims = new List<Claim>
             {
                 new Claim("name", user.Username),
-                new Claim("id", user.Id.ToString())
+                new Claim("id", user.Id.ToString(CultureInfo.InvariantCulture)),
             };
 
             // Adiciona cada role como um claim separado
@@ -71,30 +76,38 @@ public class AuthApplication : IAuthApplication
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
-            );
-
-            if (token == null)
-            {
-                baseReturn.Code = "401";
-                baseReturn.Message = "Usuario nao autorizado";
-                return baseReturn;
-            }
+                    SecurityAlgorithms.HmacSha256Signature));
 
             baseReturn.Code = "200";
             baseReturn.Message = "Usuario logado com sucesso";
             baseReturn.Data = tokenHandler.WriteToken(token);
+        }
+        catch (ArgumentException ex)
+        {
+            baseReturn.Code = "400";
+            baseReturn.Message = $"Dados inválidos: {ex.Message}";
+        }
+        catch (InvalidOperationException ex)
+        {
+            baseReturn.Code = "500";
+            baseReturn.Message = $"Erro de operação: {ex.Message}";
         }
         catch (Exception ex)
         {
             baseReturn.Code = "500";
             baseReturn.Message = $"Ocorreu um erro inesperado: {ex.Message}";
         }
+
         return baseReturn;
     }
 
-    public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
+    public async Task<BaseReturn<UserData>> RegisterAsync(RegisterRequest request)
     {
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
         BaseReturn<UserData> baseReturn = new BaseReturn<UserData>();
         try
         {
@@ -106,7 +119,7 @@ public class AuthApplication : IAuthApplication
                     Username = request.Username,
                     Email = request.Email,
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                    Roles = new List<Role> { new Role { Id = 1 } } // Apenas o Id ja basta
+                    Roles = new List<Role> { new Role { Id = 1 } }, // Apenas o Id ja basta
                 };
 
                 await _authRepository.RegisterUser(user);
@@ -116,11 +129,11 @@ public class AuthApplication : IAuthApplication
                     Username = request.Username,
                     Email = request.Email,
                     DriverLicense = request.DriverLicense,
-                    Cellphone = request.CellPhone
+                    Cellphone = request.CellPhone,
                 };
 
                 var json = JsonSerializer.Serialize(userData);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync(_loccarApi + "/customer/register", content);
 
@@ -140,14 +153,45 @@ public class AuthApplication : IAuthApplication
                 baseReturn.Code = "400";
                 baseReturn.Message = "Ja existe um usuario com esse email";
             }
-        } 
-        catch (Exception ex) 
+        }
+        catch (ArgumentException ex)
         {
-
+            Console.WriteLine("Erro: " + ex);
+            baseReturn.Code = "400";
+            baseReturn.Message = $"Dados inválidos: {ex.Message}";
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine("Erro: " + ex);
+            baseReturn.Code = "500";
+            baseReturn.Message = $"Erro de operação: {ex.Message}";
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Erro: " + ex);
+            baseReturn.Code = "502";
+            baseReturn.Message = $"Erro de comunicação: {ex.Message}";
+        }
+        catch (Exception ex)
+        {
             Console.WriteLine("Erro: " + ex);
             baseReturn.Code = "500";
             baseReturn.Message = $"Ocorreu um erro inesperado: {ex.Message}";
         }
+
         return baseReturn;
+    }
+
+    // Métodos de compatibilidade (obsoletos)
+    [Obsolete("Use LoginAsync instead")]
+    public async Task<BaseReturn<string>> Login(LoginRequest loginRequest)
+    {
+        return await LoginAsync(loginRequest);
+    }
+
+    [Obsolete("Use RegisterAsync instead")]
+    public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
+    {
+        return await RegisterAsync(request);
     }
 }

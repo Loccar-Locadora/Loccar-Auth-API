@@ -9,10 +9,11 @@ using Xunit;
 
 namespace LoccarTests
 {
-    public class AuthRepositoryIntegrationTests : IDisposable
+    public sealed class AuthRepositoryIntegrationTests : IDisposable
     {
         private readonly DataBaseContext _context;
         private readonly AuthRepository _repository;
+        private bool _disposed;
 
         public AuthRepositoryIntegrationTests()
         {
@@ -24,10 +25,8 @@ namespace LoccarTests
             _repository = new AuthRepository(_context);
         }
 
-        #region FindUserByEmail Tests
-
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnUser_WhenUserExists()
+        public async Task FindUserByEmail_ShouldReturnUser_WhenUserExistsAsync()
         {
             // Arrange
             var user = new User
@@ -36,7 +35,7 @@ namespace LoccarTests
                 Username = "TestUser",
                 PasswordHash = "hashedpassword",
                 IsActive = true,
-                Roles = new List<Role>()
+                Roles = new List<Role>(),
             };
 
             _context.Users.Add(user);
@@ -52,7 +51,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnNull_WhenUserDoesNotExist()
+        public async Task FindUserByEmail_ShouldReturnNull_WhenUserDoesNotExistAsync()
         {
             // Act
             var result = await _repository.FindUserByEmail("nonexistent@email.com");
@@ -62,21 +61,17 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnNull_WhenEmailIsEmpty()
+        public async Task FindUserByEmail_ShouldReturnNull_WhenEmailIsEmptyAsync()
         {
             // Act
-            var result = await _repository.FindUserByEmail("");
+            var result = await _repository.FindUserByEmail(string.Empty);
 
             // Assert
             result.Should().BeNull();
         }
 
-        #endregion
-
-        #region RegisterUser Tests
-
         [Fact]
-        public async Task RegisterUser_ShouldAddUserToDatabase()
+        public async Task RegisterUser_ShouldAddUserToDatabaseAsync()
         {
             // Arrange
             var user = new User
@@ -84,7 +79,7 @@ namespace LoccarTests
                 Email = "newuser@email.com",
                 Username = "NewUser",
                 PasswordHash = "hashedpassword",
-                Roles = new List<Role>()
+                Roles = new List<Role>(),
             };
 
             // Act
@@ -99,14 +94,14 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task RegisterUser_ShouldGenerateId()
+        public async Task RegisterUser_ShouldGenerateIdAsync()
         {
             // Arrange
             var user = new User
             {
                 Email = "newuser@email.com",
                 Username = "NewUser",
-                PasswordHash = "hashedpassword"
+                PasswordHash = "hashedpassword",
             };
 
             // Act
@@ -118,19 +113,15 @@ namespace LoccarTests
             savedUser!.Id.Should().BeGreaterThan(0);
         }
 
-        #endregion
-
-        #region Integration Workflow Tests
-
         [Fact]
-        public async Task CompleteWorkflow_RegisterThenFind_ShouldWork()
+        public async Task CompleteWorkflow_RegisterThenFind_ShouldWorkAsync()
         {
             // Arrange
             var user = new User
             {
                 Email = "workflow@email.com",
                 Username = "WorkflowUser",
-                PasswordHash = "workflowhash"
+                PasswordHash = "workflowhash",
             };
 
             // Act - Register
@@ -149,14 +140,14 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task RegisterMultipleUsers_ShouldWork()
+        public async Task RegisterMultipleUsers_ShouldWorkAsync()
         {
             // Arrange
             var users = new List<User>
             {
                 new User { Email = "user1@email.com", Username = "User1", PasswordHash = "hash1" },
                 new User { Email = "user2@email.com", Username = "User2", PasswordHash = "hash2" },
-                new User { Email = "user3@email.com", Username = "User3", PasswordHash = "hash3" }
+                new User { Email = "user3@email.com", Username = "User3", PasswordHash = "hash3" },
             };
 
             // Act
@@ -171,11 +162,19 @@ namespace LoccarTests
             savedUsers.Should().OnlyContain(u => u.IsActive == true);
         }
 
-        #endregion
-
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _context?.Dispose();
+                _disposed = true;
+            }
         }
     }
 }

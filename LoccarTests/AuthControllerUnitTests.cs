@@ -22,70 +22,64 @@ namespace LoccarTests
             _controller = new AuthController(_authApplicationMock.Object);
         }
 
-        #region Login Tests
-
         [Fact]
-        public async Task Login_ShouldReturnSuccess_WhenApplicationReturnsSuccess()
+        public async Task Login_ShouldReturnSuccess_WhenApplicationReturnsSuccessAsync()
         {
             // Arrange
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = "123456"
+                Password = "123456",
             };
 
             var expectedResult = new BaseReturn<string>
             {
                 Code = "200",
                 Message = "Usuario logado com sucesso",
-                Data = "fake-jwt-token"
+                Data = "fake-jwt-token",
             };
 
-            _authApplicationMock.Setup(app => app.Login(request))
+            _authApplicationMock.Setup(app => app.LoginAsync(request))
                                .ReturnsAsync(expectedResult);
 
             // Act
-            var result = await _controller.Login(request);
+            var result = await _controller.LoginAsync(request);
 
             // Assert
             result.Should().BeEquivalentTo(expectedResult);
-            _authApplicationMock.Verify(app => app.Login(request), Times.Once);
+            _authApplicationMock.Verify(app => app.LoginAsync(request), Times.Once);
         }
 
         [Fact]
-        public async Task Login_ShouldReturnError_WhenApplicationReturnsError()
+        public async Task Login_ShouldReturnError_WhenApplicationReturnsErrorAsync()
         {
             // Arrange
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = "wrongpassword"
+                Password = "wrongpassword",
             };
 
             var expectedResult = new BaseReturn<string>
             {
                 Code = "401",
                 Message = "Usuario nao autorizado",
-                Data = null
+                Data = null,
             };
 
-            _authApplicationMock.Setup(app => app.Login(request))
+            _authApplicationMock.Setup(app => app.LoginAsync(request))
                                .ReturnsAsync(expectedResult);
 
             // Act
-            var result = await _controller.Login(request);
+            var result = await _controller.LoginAsync(request);
 
             // Assert
             result.Should().BeEquivalentTo(expectedResult);
-            _authApplicationMock.Verify(app => app.Login(request), Times.Once);
+            _authApplicationMock.Verify(app => app.LoginAsync(request), Times.Once);
         }
 
-        #endregion
-
-        #region Register Tests
-
         [Fact]
-        public async Task Register_ShouldReturnSuccess_WhenApplicationReturnsSuccess()
+        public async Task Register_ShouldReturnSuccess_WhenApplicationReturnsSuccessAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -94,7 +88,7 @@ namespace LoccarTests
                 Username = "TestUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             var expectedUserData = new UserData
@@ -102,29 +96,29 @@ namespace LoccarTests
                 Email = request.Email,
                 Username = request.Username,
                 DriverLicense = request.DriverLicense,
-                Cellphone = request.CellPhone
+                Cellphone = request.CellPhone,
             };
 
             var expectedResult = new BaseReturn<UserData>
             {
                 Code = "201",
                 Message = "Usuario cadastrado com sucesso!",
-                Data = expectedUserData
+                Data = expectedUserData,
             };
 
-            _authApplicationMock.Setup(app => app.Register(request))
+            _authApplicationMock.Setup(app => app.RegisterAsync(request))
                                .ReturnsAsync(expectedResult);
 
             // Act
-            var result = await _controller.Register(request);
+            var result = await _controller.RegisterAsync(request);
 
             // Assert
             result.Should().BeEquivalentTo(expectedResult);
-            _authApplicationMock.Verify(app => app.Register(request), Times.Once);
+            _authApplicationMock.Verify(app => app.RegisterAsync(request), Times.Once);
         }
 
         [Fact]
-        public async Task Register_ShouldReturnError_WhenApplicationReturnsError()
+        public async Task Register_ShouldReturnError_WhenApplicationReturnsErrorAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -133,30 +127,26 @@ namespace LoccarTests
                 Username = "TestUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             var expectedResult = new BaseReturn<UserData>
             {
                 Code = "400",
                 Message = "Ja existe um usuario com esse email",
-                Data = null
+                Data = null,
             };
 
-            _authApplicationMock.Setup(app => app.Register(request))
+            _authApplicationMock.Setup(app => app.RegisterAsync(request))
                                .ReturnsAsync(expectedResult);
 
             // Act
-            var result = await _controller.Register(request);
+            var result = await _controller.RegisterAsync(request);
 
             // Assert
             result.Should().BeEquivalentTo(expectedResult);
-            _authApplicationMock.Verify(app => app.Register(request), Times.Once);
+            _authApplicationMock.Verify(app => app.RegisterAsync(request), Times.Once);
         }
-
-        #endregion
-
-        #region Basic Functionality Tests
 
         [Fact]
         public void Constructor_ShouldInitializeCorrectly()
@@ -166,22 +156,22 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldPassRequestThrough()
+        public async Task Login_ShouldPassRequestThroughAsync()
         {
             // Arrange
             var request = new LoginRequest { Email = "test@email.com", Password = "123456" };
-            _authApplicationMock.Setup(app => app.Login(It.IsAny<LoginRequest>()))
+            _authApplicationMock.Setup(app => app.LoginAsync(It.IsAny<LoginRequest>()))
                                .ReturnsAsync(new BaseReturn<string> { Code = "200" });
 
             // Act
-            await _controller.Login(request);
+            await _controller.LoginAsync(request);
 
             // Assert
-            _authApplicationMock.Verify(app => app.Login(request), Times.Once);
+            _authApplicationMock.Verify(app => app.LoginAsync(request), Times.Once);
         }
 
         [Fact]
-        public async Task Register_ShouldPassRequestThrough()
+        public async Task Register_ShouldPassRequestThroughAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -190,18 +180,16 @@ namespace LoccarTests
                 Username = "TestUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
-            _authApplicationMock.Setup(app => app.Register(It.IsAny<RegisterRequest>()))
+            _authApplicationMock.Setup(app => app.RegisterAsync(It.IsAny<RegisterRequest>()))
                                .ReturnsAsync(new BaseReturn<UserData> { Code = "201" });
 
             // Act
-            await _controller.Register(request);
+            await _controller.RegisterAsync(request);
 
             // Assert
-            _authApplicationMock.Verify(app => app.Register(request), Times.Once);
+            _authApplicationMock.Verify(app => app.RegisterAsync(request), Times.Once);
         }
-
-        #endregion
     }
 }

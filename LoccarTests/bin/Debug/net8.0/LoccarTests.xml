@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LoccarTests</name>
+    </assembly>
+    <members>
+        <member name="T:LoccarTests.FakeHttpMessageHandler">
+            <summary>
+            Handler HTTP fake simples para testes.
+            </summary>
+        </member>
+        <member name="T:LoccarTests.MockHttpClientFactory">
+            <summary>
+            Factory simples para criar HttpClients com mocks.
+            </summary>
+        </member>
+        <member name="M:LoccarTests.MockHttpClientFactory.CreateSuccessClient">
+            <summary>
+            Cria um HttpClient que sempre retorna sucesso (201 Created).
+            </summary>
+            <returns>HttpClient configurado para retornar sucesso.</returns>
+        </member>
+        <member name="M:LoccarTests.MockHttpClientFactory.CreateErrorClient">
+            <summary>
+            Cria um HttpClient que sempre retorna erro (400 BadRequest).
+            </summary>
+            <returns>HttpClient configurado para retornar erro.</returns>
+        </member>
+        <member name="M:LoccarTests.MockHttpClientFactory.CreateCustomerRegisterClient(System.Boolean)">
+            <summary>
+            Cria um HttpClient para testes de registro (sucesso ou falha).
+            </summary>
+            <param name="success">Se deve retornar sucesso ou falha.</param>
+            <returns>HttpClient configurado conforme especificado.</returns>
+        </member>
+    </members>
+</doc>

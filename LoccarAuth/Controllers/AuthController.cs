@@ -14,23 +14,24 @@ namespace LoccarAuth.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthApplication _authApplication;
+
         public AuthController(IAuthApplication authApplication)
         {
-            _authApplication = authApplication;
+            _authApplication = authApplication ?? throw new ArgumentNullException(nameof(authApplication));
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<BaseReturn<string>> Login(LoginRequest request)
+        public async Task<BaseReturn<string>> LoginAsync(LoginRequest request)
         {
-            return await _authApplication.Login(request);
+            return await _authApplication.LoginAsync(request);
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
+        public async Task<BaseReturn<UserData>> RegisterAsync(RegisterRequest request)
         {
-            return await _authApplication.Register(request);
+            return await _authApplication.RegisterAsync(request);
         }
     }
 }

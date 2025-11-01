@@ -27,12 +27,12 @@ namespace LoccarTests
         {
             _authRepoMock = new Mock<IAuthRepository>();
 
-            var inMemorySettings = new Dictionary<string, string?> 
+            var inMemorySettings = new Dictionary<string, string?>
             {
-                {"Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890"},
-                {"Jwt:Issuer", "Loccar"},  
-                {"Jwt:Audience", "Loccar"},
-                {"LoccarApi:BaseUrl", "http://fake-api"}
+                { "Jwt:Key", "MinhaChaveSecretaSuperSegura1234567890" },
+                { "Jwt:Issuer", "Loccar" },
+                { "Jwt:Audience", "Loccar" },
+                { "LoccarApi:BaseUrl", "http://fake-api" },
             };
             _configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemorySettings)
@@ -42,21 +42,19 @@ namespace LoccarTests
             _authApp = new AuthApplication(_configuration, _authRepoMock.Object, _httpClient);
         }
 
-        #region Login Tests
-
         [Fact]
-        public async Task Login_ShouldReturn200_WhenCredentialsAreValid()
+        public async Task Login_ShouldReturn200_WhenCredentialsAreValidAsync()
         {
             // Arrange
             var password = "123456";
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            var user = new User 
-            { 
-                Id = 1, 
-                Username = "TestUser", 
-                Email = "test@email.com", 
+            var user = new User
+            {
+                Id = 1,
+                Username = "TestUser",
+                Email = "test@email.com",
                 PasswordHash = hashedPassword,
-                Roles = new List<Role> { new Role { Id = 1, Name = "User" } }
+                Roles = new List<Role> { new Role { Id = 1, Name = "User" } },
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail("test@email.com"))
@@ -65,11 +63,11 @@ namespace LoccarTests
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = password
+                Password = password,
             };
 
             // Act
-            var result = await _authApp.Login(request);
+            var result = await _authApp.LoginAsync(request);
 
             // Assert
             result.Code.Should().Be("200");
@@ -78,7 +76,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturn401_WhenUserNotFound()
+        public async Task Login_ShouldReturn401_WhenUserNotFoundAsync()
         {
             // Arrange
             _authRepoMock.Setup(r => r.FindUserByEmail(It.IsAny<string>()))
@@ -87,11 +85,11 @@ namespace LoccarTests
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = "123456"
+                Password = "123456",
             };
 
             // Act
-            var result = await _authApp.Login(request);
+            var result = await _authApp.LoginAsync(request);
 
             // Assert
             result.Code.Should().Be("401");
@@ -100,16 +98,16 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturn401_WhenPasswordIsWrong()
+        public async Task Login_ShouldReturn401_WhenPasswordIsWrongAsync()
         {
             // Arrange
-            var user = new User 
-            { 
-                Id = 1, 
-                Username = "TestUser", 
-                Email = "test@email.com", 
+            var user = new User
+            {
+                Id = 1,
+                Username = "TestUser",
+                Email = "test@email.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("correctpassword"),
-                Roles = new List<Role> { new Role { Id = 1, Name = "User" } }
+                Roles = new List<Role> { new Role { Id = 1, Name = "User" } },
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail("test@email.com"))
@@ -118,11 +116,11 @@ namespace LoccarTests
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = "wrongpassword"
+                Password = "wrongpassword",
             };
 
             // Act
-            var result = await _authApp.Login(request);
+            var result = await _authApp.LoginAsync(request);
 
             // Assert
             result.Code.Should().Be("401");
@@ -130,12 +128,8 @@ namespace LoccarTests
             result.Data.Should().BeNull();
         }
 
-        #endregion
-
-        #region Register Tests
-
         [Fact]
-        public async Task Register_ShouldReturn201_WhenUserDoesNotExist()
+        public async Task Register_ShouldReturn201_WhenUserDoesNotExistAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -144,7 +138,7 @@ namespace LoccarTests
                 Username = "NewUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
@@ -153,7 +147,7 @@ namespace LoccarTests
                          .Returns(Task.CompletedTask);
 
             // Act
-            var result = await _authApp.Register(request);
+            var result = await _authApp.RegisterAsync(request);
 
             // Assert
             result.Code.Should().Be("201");
@@ -164,7 +158,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturn400_WhenUserAlreadyExists()
+        public async Task Register_ShouldReturn400_WhenUserAlreadyExistsAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -173,14 +167,14 @@ namespace LoccarTests
                 Username = "ExistingUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
                          .ReturnsAsync(new User { Email = request.Email });
 
             // Act
-            var result = await _authApp.Register(request);
+            var result = await _authApp.RegisterAsync(request);
 
             // Assert
             result.Code.Should().Be("400");
@@ -189,7 +183,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturn400_WhenHttpClientFails()
+        public async Task Register_ShouldReturn400_WhenHttpClientFailsAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -198,7 +192,7 @@ namespace LoccarTests
                 Username = "TestUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
@@ -210,7 +204,7 @@ namespace LoccarTests
             var authApp = new AuthApplication(_configuration, _authRepoMock.Object, httpClient);
 
             // Act
-            var result = await authApp.Register(request);
+            var result = await authApp.RegisterAsync(request);
 
             // Assert
             result.Code.Should().Be("400");
@@ -218,12 +212,8 @@ namespace LoccarTests
             result.Data.Should().BeNull();
         }
 
-        #endregion
-
-        #region Repository Verification Tests
-
         [Fact]
-        public async Task Register_ShouldCallRepository_WhenUserIsValid()
+        public async Task Register_ShouldCallRepository_WhenUserIsValidAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -232,7 +222,7 @@ namespace LoccarTests
                 Username = "TestUser",
                 Password = "123456",
                 DriverLicense = "12345678901",
-                CellPhone = "61999999999"
+                CellPhone = "61999999999",
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail(request.Email))
@@ -241,7 +231,7 @@ namespace LoccarTests
                          .Returns(Task.CompletedTask);
 
             // Act
-            await _authApp.Register(request);
+            await _authApp.RegisterAsync(request);
 
             // Assert
             _authRepoMock.Verify(r => r.FindUserByEmail(request.Email), Times.Once);
@@ -249,16 +239,16 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldCallRepository_OnlyOnce()
+        public async Task Login_ShouldCallRepository_OnlyOnceAsync()
         {
             // Arrange
-            var user = new User 
-            { 
-                Id = 1, 
-                Username = "TestUser", 
-                Email = "test@email.com", 
+            var user = new User
+            {
+                Id = 1,
+                Username = "TestUser",
+                Email = "test@email.com",
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456"),
-                Roles = new List<Role> { new Role { Id = 1, Name = "User" } }
+                Roles = new List<Role> { new Role { Id = 1, Name = "User" } },
             };
 
             _authRepoMock.Setup(r => r.FindUserByEmail("test@email.com"))
@@ -267,16 +257,14 @@ namespace LoccarTests
             var request = new LoginRequest
             {
                 Email = "test@email.com",
-                Password = "123456"
+                Password = "123456",
             };
 
             // Act
-            await _authApp.Login(request);
+            await _authApp.LoginAsync(request);
 
             // Assert
             _authRepoMock.Verify(r => r.FindUserByEmail("test@email.com"), Times.Once);
         }
-
-        #endregion
     }
 }

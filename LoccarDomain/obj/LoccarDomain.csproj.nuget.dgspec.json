@@ -51,6 +51,12 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AsyncUsageAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0-alpha003, )"
+            },
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
@@ -59,6 +65,18 @@
               "target": "Package",
               "version": "[2.3.1, )"
             },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
+            "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
             "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
               "version": "[10.0.0-rc.1.25451.107, )"
@@ -66,6 +84,18 @@
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[8.14.0, )"
+            },
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.32.0.97167, )"
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.2.0-beta.556, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

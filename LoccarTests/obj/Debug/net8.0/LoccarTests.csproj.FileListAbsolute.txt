@@ -924,3 +924,9 @@ C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarTests\obj\Debug\net8.0\refint\
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarTests\obj\Debug\net8.0\LoccarTests.pdb
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarTests\obj\Debug\net8.0\LoccarTests.genruntimeconfig.cache
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarTests\obj\Debug\net8.0\ref\LoccarTests.dll
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\bin\Debug\net8.0\LoccarTests.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\bin\Debug\net8.0\LoccarApplication.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\bin\Debug\net8.0\LoccarInfra.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\bin\Debug\net8.0\LoccarDomain.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\bin\Debug\net8.0\LoccarWebapi.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarTests\obj\Debug\net8.0\LoccarTests.xml

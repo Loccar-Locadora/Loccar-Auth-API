@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,14 @@ namespace LoccarApplication.Interfaces
 {
     public interface IAuthApplication
     {
+        Task<BaseReturn<string>> LoginAsync(LoginRequest loginRequest);
+        Task<BaseReturn<UserData>> RegisterAsync(RegisterRequest request);
+
+        // Métodos de compatibilidade (obsoletos)
+        [Obsolete("Use LoginAsync instead")]
         Task<BaseReturn<string>> Login(LoginRequest loginRequest);
+        
+        [Obsolete("Use RegisterAsync instead")]
         Task<BaseReturn<UserData>> Register(RegisterRequest request);
     }
 }

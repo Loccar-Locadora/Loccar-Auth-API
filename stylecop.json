@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers.CodeFixes/Resources/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Loccar",
+      "copyrightText": "Copyright (c) {companyName}. All rights reserved.",
+      "xmlHeader": false,
+      "fileNamingConvention": "stylecop"
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require",
+      "allowConsecutiveUsings": true
+    },
+    "namingRules": {
+      "allowCommonHungarianPrefixes": false,
+      "allowedHungarianPrefixes": [],
+      "includeInferredTupleElementNames": true,
+      "tupleElementNameCasing": "camelCase"
+    },
+    "orderingRules": {
+      "systemUsingDirectivesFirst": true,
+      "usingDirectivesPlacement": "outsideNamespace",
+      "blankLinesBetweenUsingGroups": "allow"
+    },
+    "readabilityRules": {
+      "allowBuiltInTypeAliases": true
+    },
+    "spacingRules": {
+      "closingParenthesisMustBeSpacedCorrectly": true,
+      "openingParenthesisMustBeSpacedCorrectly": true
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": [
+        "class",
+        "interface", 
+        "struct",
+        "delegate",
+        "enum"
+      ]
+    }
+  }
+}
