@@ -43,7 +43,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturn200_WhenCredentialsAreValidAsync()
+        public async Task LoginShouldReturn200WhenCredentialsAreValidAsync()
         {
             // Arrange
             var password = "123456";
@@ -76,7 +76,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturn401_WhenUserNotFoundAsync()
+        public async Task LoginShouldReturn401WhenUserNotFoundAsync()
         {
             // Arrange
             _authRepoMock.Setup(r => r.FindUserByEmail(It.IsAny<string>()))
@@ -98,7 +98,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturn401_WhenPasswordIsWrongAsync()
+        public async Task LoginShouldReturn401WhenPasswordIsWrongAsync()
         {
             // Arrange
             var user = new User
@@ -129,7 +129,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturn201_WhenUserDoesNotExistAsync()
+        public async Task RegisterShouldReturn201WhenUserDoesNotExistAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -158,7 +158,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturn400_WhenUserAlreadyExistsAsync()
+        public async Task RegisterShouldReturn400WhenUserAlreadyExistsAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -183,7 +183,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturn400_WhenHttpClientFailsAsync()
+        public async Task RegisterShouldReturn400WhenHttpClientFailsAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -200,7 +200,7 @@ namespace LoccarTests
             _authRepoMock.Setup(r => r.RegisterUser(It.IsAny<User>()))
                          .Returns(Task.CompletedTask);
 
-            var httpClient = MockHttpClientFactory.CreateErrorClient();
+            using var httpClient = MockHttpClientFactory.CreateErrorClient();
             var authApp = new AuthApplication(_configuration, _authRepoMock.Object, httpClient);
 
             // Act
@@ -213,7 +213,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldCallRepository_WhenUserIsValidAsync()
+        public async Task RegisterShouldCallRepositoryWhenUserIsValidAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -239,7 +239,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldCallRepository_OnlyOnceAsync()
+        public async Task LoginShouldCallRepositoryOnlyOnceAsync()
         {
             // Arrange
             var user = new User
@@ -265,6 +265,13 @@ namespace LoccarTests
 
             // Assert
             _authRepoMock.Verify(r => r.FindUserByEmail("test@email.com"), Times.Once);
+        }
+
+        [Fact]
+        public void ConstructorShouldInitializeCorrectly()
+        {
+            // Assert
+            _authApp.Should().NotBeNull();
         }
     }
 }

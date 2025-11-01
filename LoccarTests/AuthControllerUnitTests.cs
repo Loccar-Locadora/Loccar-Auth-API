@@ -23,7 +23,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturnSuccess_WhenApplicationReturnsSuccessAsync()
+        public async Task LoginShouldReturnSuccessWhenApplicationReturnsSuccessAsync()
         {
             // Arrange
             var request = new LoginRequest
@@ -51,7 +51,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Login_ShouldReturnError_WhenApplicationReturnsErrorAsync()
+        public async Task LoginShouldReturnErrorWhenApplicationReturnsErrorAsync()
         {
             // Arrange
             var request = new LoginRequest
@@ -79,7 +79,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturnSuccess_WhenApplicationReturnsSuccessAsync()
+        public async Task RegisterShouldReturnSuccessWhenApplicationReturnsSuccessAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -118,7 +118,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldReturnError_WhenApplicationReturnsErrorAsync()
+        public async Task RegisterShouldReturnErrorWhenApplicationReturnsErrorAsync()
         {
             // Arrange
             var request = new RegisterRequest
@@ -149,14 +149,14 @@ namespace LoccarTests
         }
 
         [Fact]
-        public void Constructor_ShouldInitializeCorrectly()
+        public void ConstructorShouldInitializeCorrectly()
         {
             // Assert
             _controller.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task Login_ShouldPassRequestThroughAsync()
+        public async Task LoginShouldPassRequestThroughAsync()
         {
             // Arrange
             var request = new LoginRequest { Email = "test@email.com", Password = "123456" };
@@ -171,7 +171,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task Register_ShouldPassRequestThroughAsync()
+        public async Task RegisterShouldPassRequestThroughAsync()
         {
             // Arrange
             var request = new RegisterRequest

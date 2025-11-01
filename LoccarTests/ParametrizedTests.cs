@@ -80,7 +80,7 @@ namespace LoccarTests
         [InlineData("user1@email.com", "password123", "200", "Usuario logado com sucesso")]
         [InlineData("user2@email.com", "mypassword", "200", "Usuario logado com sucesso")]
         [InlineData("admin@email.com", "adminpass", "200", "Usuario logado com sucesso")]
-        public async Task Login_ShouldReturnExpectedResult_WithValidCredentialsAsync(
+        public async Task LoginShouldReturnExpectedResultWithValidCredentialsAsync(
             string email,
             string password,
             string expectedCode,
@@ -115,7 +115,7 @@ namespace LoccarTests
         [InlineData("user@email.com", "wrongpassword")]
         [InlineData("", "password")]
         [InlineData("user@email.com", "")]
-        public async Task Login_ShouldReturn401_WithInvalidCredentialsAsync(string email, string password)
+        public async Task LoginShouldReturn401WithInvalidCredentialsAsync(string email, string password)
         {
             // Arrange
             if (!string.IsNullOrEmpty(email) && password == "wrongpassword")
@@ -148,7 +148,7 @@ namespace LoccarTests
 
         [Theory]
         [MemberData(nameof(ValidRegisterData))]
-        public async Task Register_ShouldReturnSuccess_WithValidDataAsync(
+        public async Task RegisterShouldReturnSuccessWithValidDataAsync(
             string email,
             string username,
             string password,
@@ -185,7 +185,7 @@ namespace LoccarTests
         [InlineData("existing1@email.com")]
         [InlineData("existing2@email.com")]
         [InlineData("duplicate@email.com")]
-        public async Task Register_ShouldReturn400_WhenUserAlreadyExistsAsync(string email)
+        public async Task RegisterShouldReturn400WhenUserAlreadyExistsAsync(string email)
         {
             // Arrange
             _authRepoMock.Setup(r => r.FindUserByEmail(email))
@@ -215,7 +215,7 @@ namespace LoccarTests
         [InlineData("invalid-email", "123456")]
         [InlineData("test@", "123456")]
         [InlineData("@email.com", "123456")]
-        public async Task Login_ShouldHandleInvalidEmailsAsync(string email, string password)
+        public async Task LoginShouldHandleInvalidEmailsAsync(string email, string password)
         {
             // Arrange
             _authRepoMock.Setup(r => r.FindUserByEmail(It.IsAny<string>())).ReturnsAsync((User?)null);
@@ -234,7 +234,7 @@ namespace LoccarTests
         [InlineData("test@email.com", "")]
         [InlineData("test@email.com", " ")]
         [InlineData("test@email.com", "a")]
-        public async Task Login_ShouldHandleInvalidPasswordsAsync(string email, string password)
+        public async Task LoginShouldHandleInvalidPasswordsAsync(string email, string password)
         {
             // Arrange
             var user = new User

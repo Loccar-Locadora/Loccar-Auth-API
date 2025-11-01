@@ -26,7 +26,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnUser_WhenUserExistsAsync()
+        public async Task FindUserByEmailShouldReturnUserWhenUserExistsAsync()
         {
             // Arrange
             var user = new User
@@ -51,7 +51,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnNull_WhenUserDoesNotExistAsync()
+        public async Task FindUserByEmailShouldReturnNullWhenUserDoesNotExistAsync()
         {
             // Act
             var result = await _repository.FindUserByEmail("nonexistent@email.com");
@@ -61,7 +61,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task FindUserByEmail_ShouldReturnNull_WhenEmailIsEmptyAsync()
+        public async Task FindUserByEmailShouldReturnNullWhenEmailIsEmptyAsync()
         {
             // Act
             var result = await _repository.FindUserByEmail(string.Empty);
@@ -71,7 +71,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task RegisterUser_ShouldAddUserToDatabaseAsync()
+        public async Task RegisterUserShouldAddUserToDatabaseAsync()
         {
             // Arrange
             var user = new User
@@ -94,7 +94,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task RegisterUser_ShouldGenerateIdAsync()
+        public async Task RegisterUserShouldGenerateIdAsync()
         {
             // Arrange
             var user = new User
@@ -114,7 +114,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task CompleteWorkflow_RegisterThenFind_ShouldWorkAsync()
+        public async Task CompleteWorkflowRegisterThenFindShouldWorkAsync()
         {
             // Arrange
             var user = new User
@@ -140,7 +140,7 @@ namespace LoccarTests
         }
 
         [Fact]
-        public async Task RegisterMultipleUsers_ShouldWorkAsync()
+        public async Task RegisterMultipleUsersShouldWorkAsync()
         {
             // Arrange
             var users = new List<User>
