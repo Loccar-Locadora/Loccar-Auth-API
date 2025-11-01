@@ -2,14 +2,18 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
+# Default to LF for cross-platform compatibility
+end_of_line = lf
+
 [*.{cs,csx}]
 indent_size = 4
+# Keep CRLF for C# files on Windows development
+end_of_line = crlf
 dotnet_analyzer_diagnostic.category-style.severity = warning
 dotnet_analyzer_diagnostic.category-maintainability.severity = warning
 
@@ -40,35 +44,39 @@ csharp_space_after_dot = false
 
 # Suppress non-critical warnings for test projects
 [*Tests*.cs]
-dotnet_diagnostic.CA1515.severity = none  # Internal types in test assemblies
-dotnet_diagnostic.CA2000.severity = suggestion  # Dispose objects (test mocks)
-dotnet_diagnostic.SA1201.severity = suggestion  # Element order in tests
-dotnet_diagnostic.CA1707.severity = none  # Underscores in test method names
-dotnet_diagnostic.CA1852.severity = none  # Sealed types in test assemblies
-
-# Test specific files
-[**/Tests/**/*.cs]
 dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA2000.severity = suggestion
 dotnet_diagnostic.SA1201.severity = suggestion
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1852.severity = none
 
-# Mock and test utility files  
+# Test utility files
 [**/MockHttpClientFactory.cs]
-dotnet_diagnostic.CA2000.severity = none  # HttpClient factory pattern is intentional
+dotnet_diagnostic.CA2000.severity = none
 
 [**/FakeHttpMessageHandler.cs]  
-dotnet_diagnostic.CA1852.severity = none  # Test utility class
+dotnet_diagnostic.CA1852.severity = none
 
+# Project files - use CRLF for Windows compatibility
+[*.{csproj,sln,props,targets}]
+end_of_line = crlf
+
+# Configuration files - use LF for cross-platform
 [*.{json,yml,yaml}]
 indent_size = 2
-
-[*.md]
-trim_trailing_whitespace = false
-
-[*.{sh}]
 end_of_line = lf
 
-[*.{bat,cmd}]
+[*.xml]
+end_of_line = crlf
+
+# Documentation and scripts - use LF
+[*.md]
+trim_trailing_whitespace = false
+end_of_line = lf
+
+[*.{sh,sql}]
+end_of_line = lf
+
+# Windows scripts - use CRLF
+[*.{bat,cmd,ps1}]
 end_of_line = crlf
