@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "feUStAf2W+Q=",
+  "dgSpecHash": "d8VJ1aQlyWs=",
   "success": true,
   "projectFilePath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.aspnetcore.identity\\2.3.1\\microsoft.aspnetcore.identity.2.3.1.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.3.0\\microsoft.aspnetcore.webutilities.2.3.0.nupkg.sha512",
+    "C:\\Users\\barre\\.nuget\\packages\\microsoft.codeanalysis.netanalyzers\\8.0.0\\microsoft.codeanalysis.netanalyzers.8.0.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.0-rc.1.25451.107\\microsoft.extensions.dependencyinjection.10.0.0-rc.1.25451.107.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.0-rc.1.25451.107\\microsoft.extensions.dependencyinjection.abstractions.10.0.0-rc.1.25451.107.nupkg.sha512",
@@ -41,6 +42,9 @@
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.net.http.headers\\2.3.0\\microsoft.net.http.headers.2.3.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
+    "C:\\Users\\barre\\.nuget\\packages\\sonaranalyzer.csharp\\9.32.0.97167\\sonaranalyzer.csharp.9.32.0.97167.nupkg.sha512",
+    "C:\\Users\\barre\\.nuget\\packages\\stylecop.analyzers\\1.2.0-beta.507\\stylecop.analyzers.1.2.0-beta.507.nupkg.sha512",
+    "C:\\Users\\barre\\.nuget\\packages\\stylecop.analyzers.unstable\\1.2.0.507\\stylecop.analyzers.unstable.1.2.0.507.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\system.buffers\\4.6.0\\system.buffers.4.6.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\barre\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.0-rc.1.25451.107\\system.diagnostics.diagnosticsource.10.0.0-rc.1.25451.107.nupkg.sha512",

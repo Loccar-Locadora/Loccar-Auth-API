@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Loccar Code Analysis Rules" Description="Custom code analysis rules for Loccar projects" ToolsVersion="16.0">
+  <IncludeAll Action="Warning" />
+  
+  <!-- StyleCop Rules -->
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!-- Documentation rules - make them suggestions instead of warnings -->
+    <Rule Id="SA1600" Action="Info" />   <!-- Elements should be documented -->
+    <Rule Id="SA1601" Action="Info" />   <!-- Partial elements should be documented -->
+    <Rule Id="SA1602" Action="Info" />   <!-- Enumeration items should be documented -->
+    <Rule Id="SA1633" Action="None" />   <!-- File should have header (disabled) -->
+    <Rule Id="SA1200" Action="None" />   <!-- Using directives should be placed correctly (conflicts with modern C#) -->
+    
+    <!-- Layout rules -->
+    <Rule Id="SA1413" Action="Warning" /> <!-- Use trailing comma in multi-line initializers -->
+    
+    <!-- Naming rules -->
+    <Rule Id="SA1309" Action="None" />   <!-- Field names should not begin with underscore (allow private fields with _) -->
+    
+    <!-- Readability rules -->
+    <Rule Id="SA1101" Action="None" />   <!-- Prefix local calls with this (disabled for cleaner code) -->
+    
+    <!-- Ordering rules -->
+    <Rule Id="SA1503" Action="Warning" /> <!-- Braces should not be omitted -->
+  </Rules>
+  
+  <!-- Microsoft.CodeAnalysis.NetAnalyzers -->
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
+    <!-- Design rules -->
+    <Rule Id="CA1031" Action="Info" />    <!-- Do not catch general exception types -->
+    <Rule Id="CA1051" Action="Warning" /> <!-- Do not declare visible instance fields -->
+    <Rule Id="CA1062" Action="Info" />    <!-- Validate arguments of public methods -->
+    
+    <!-- Performance rules -->
+    <Rule Id="CA1822" Action="Info" />    <!-- Mark members as static -->
+    <Rule Id="CA1810" Action="Warning" /> <!-- Initialize reference type static fields inline -->
+    
+    <!-- Security rules -->
+    <Rule Id="CA2007" Action="Info" />    <!-- Consider calling ConfigureAwait on the awaited task -->
+    
+    <!-- Usage rules -->
+    <Rule Id="CA2227" Action="Info" />    <!-- Collection properties should be read only -->
+  </Rules>
+  
+  <!-- SonarAnalyzer rules -->
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <!-- Bug detection -->
+    <Rule Id="S1066" Action="Warning" /> <!-- Mergeable if statements should be combined -->
+    <Rule Id="S1075" Action="Info" />    <!-- URIs should not be hardcoded -->
+    <Rule Id="S1128" Action="Warning" /> <!-- Unused "using" should be removed -->
+    <Rule Id="S1144" Action="Warning" /> <!-- Unused private types or members should be removed -->
+    
+    <!-- Code smell detection -->
+    <Rule Id="S101" Action="Info" />     <!-- Types should be named in PascalCase -->
+    <Rule Id="S1135" Action="Info" />    <!-- Track uses of "TODO" tags -->
+    <Rule Id="S3925" Action="Info" />    <!-- "ISerializable" should be implemented correctly -->
+    
+    <!-- Maintainability -->
+    <Rule Id="S1200" Action="Info" />    <!-- Classes should not be coupled to too many other classes -->
+  </Rules>
+</RuleSet>

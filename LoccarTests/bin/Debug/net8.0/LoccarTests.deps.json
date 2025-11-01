@@ -29,7 +29,7 @@
     "optimize": false,
     "keyFile": "",
     "emitEntryPoint": true,
-    "xmlDoc": false,
+    "xmlDoc": true,
     "debugType": "portable"
   },
   "targets": {
@@ -43,10 +43,13 @@
           "LoccarInfra": "1.0.0",
           "LoccarWebapi": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Testing": "8.0.11",
+          "Microsoft.CodeAnalysis.NetAnalyzers": "8.0.0",
           "Microsoft.EntityFrameworkCore.InMemory": "9.0.9",
           "Microsoft.Extensions.Configuration": "9.0.9",
           "Microsoft.NET.Test.Sdk": "17.12.0",
           "Moq": "4.20.72",
+          "SonarAnalyzer.CSharp": "9.32.0.97167",
+          "StyleCop.Analyzers": "1.2.0-beta.507",
           "coverlet.collector": "6.0.2",
           "xunit": "2.9.2",
           "xunit.runner.visualstudio": "2.8.2",
@@ -553,6 +556,7 @@
           "System.Text.Encodings.Web": "8.0.0"
         }
       },
+      "Microsoft.CodeAnalysis.NetAnalyzers/8.0.0": {},
       "Microsoft.CodeCoverage/17.12.0": {
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
@@ -1484,6 +1488,13 @@
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {}
         }
       },
+      "SonarAnalyzer.CSharp/9.32.0.97167": {},
+      "StyleCop.Analyzers/1.2.0-beta.507": {
+        "dependencies": {
+          "StyleCop.Analyzers.Unstable": "1.2.0.507"
+        }
+      },
+      "StyleCop.Analyzers.Unstable/1.2.0.507": {},
       "Swashbuckle.AspNetCore/6.6.2": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -3654,6 +3665,13 @@
       "path": "microsoft.aspnetcore.webutilities/2.3.0",
       "hashPath": "microsoft.aspnetcore.webutilities.2.3.0.nupkg.sha512"
     },
+    "Microsoft.CodeAnalysis.NetAnalyzers/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DxiTgkCl3CGq1rYmBX2wjY7XGbxiBdL4J+/AJIAFLKy5z70NxhnVRnPghnicXZ8oF6JKVXlW3xwznRbI3ioEKg==",
+      "path": "microsoft.codeanalysis.netanalyzers/8.0.0",
+      "hashPath": "microsoft.codeanalysis.netanalyzers.8.0.0.nupkg.sha512"
+    },
     "Microsoft.CodeCoverage/17.12.0": {
       "type": "package",
       "serviceable": true,
@@ -4052,6 +4070,27 @@
       "sha512": "sha512-mw5vcY2IEc7L+IeGrxpp/J5OSnCcjkjAgJYCm/eD52wpZze8zsSifdqV7zXslSMmfJG2iIUGZyo3KuDtEFKwMQ==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.4",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512"
+    },
+    "SonarAnalyzer.CSharp/9.32.0.97167": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Yxk86RV+8ynJpUhku1Yw2hITFmnmXKkXJ73cIFSy85ol5SnWREQg9RuTyV8nI7V7+pyLKpCfRmD7P0widsgjkg==",
+      "path": "sonaranalyzer.csharp/9.32.0.97167",
+      "hashPath": "sonaranalyzer.csharp.9.32.0.97167.nupkg.sha512"
+    },
+    "StyleCop.Analyzers/1.2.0-beta.507": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/FtugDT66cKJJ+GGH7rNpG6UDrT4iIWz45M6lrXXHobDUFDHw+q5VgkbiR+6ffTO564ge7w6fQh/eoQhVdJO8Q==",
+      "path": "stylecop.analyzers/1.2.0-beta.507",
+      "hashPath": "stylecop.analyzers.1.2.0-beta.507.nupkg.sha512"
+    },
+    "StyleCop.Analyzers.Unstable/1.2.0.507": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gTY3IQdRqDJ4hbhSA3e/R48oE8b/OiKfvwkt1QdNVfrJK2gMHBV8ldaHJ885jxWZfllK66soa/sdcjh9bX49Tw==",
+      "path": "stylecop.analyzers.unstable/1.2.0.507",
+      "hashPath": "stylecop.analyzers.unstable.1.2.0.507.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.6.2": {
       "type": "package",

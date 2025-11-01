@@ -36,3 +36,4 @@ C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\Loccar
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\refint\LoccarDomain.dll
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\LoccarDomain.pdb
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarDomain\obj\Debug\net8.0\ref\LoccarDomain.dll
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarDomain\bin\Debug\net8.0\.xml
