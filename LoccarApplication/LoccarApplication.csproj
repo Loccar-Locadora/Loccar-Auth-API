@@ -20,4 +20,8 @@
     <ProjectReference Include="..\LoccarInfra\LoccarInfra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

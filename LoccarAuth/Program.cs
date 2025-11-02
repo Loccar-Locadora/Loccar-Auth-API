@@ -10,6 +10,29 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuração do CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+    
+    // Política mais restritiva para produção usando configurações do appsettings.json
+    options.AddPolicy("ProductionCors", policy =>
+    {
+        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
+            ?? new[] { "http://localhost:3000", "http://localhost:4200" };
+            
+        policy.WithOrigins(allowedOrigins)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -65,13 +88,15 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Registrar serviços
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthApplication, AuthApplication>();
 builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
-builder.Services.AddHttpClient<IAuthApplication, AuthApplication>();
-
 
 var app = builder.Build();
+
+// Habilitar CORS - IMPORTANTE: deve vir antes de UseAuthentication e UseAuthorization
+app.UseCors(app.Environment.IsDevelopment() ? "AllowSpecificOrigins" : "ProductionCors");
 
 if (app.Environment.IsDevelopment())
 {
@@ -88,5 +113,5 @@ app.MapControllers();
 
 app.Run();
 
-// Tornar a classe Program p�blica para testes
+// Tornar a classe Program pública para testes
 public partial class Program { }

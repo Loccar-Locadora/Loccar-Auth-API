@@ -182,6 +182,28 @@ public class AuthApplication : IAuthApplication
         return baseReturn;
     }
 
+    public async Task<BaseReturn<string>> LogoutAsync()
+    {
+        BaseReturn<string> baseReturn = new BaseReturn<string>();
+
+        try
+        {
+            // Com JWT, o logout é feito no cliente removendo o token
+            // Este endpoint confirma o logout e pode registrar a ação para auditoria
+            
+            baseReturn.Code = "200";
+            baseReturn.Message = "Logout realizado com sucesso. Remova o token do armazenamento local.";
+            baseReturn.Data = "Usuario deslogado";
+        }
+        catch (Exception ex)
+        {
+            baseReturn.Code = "500";
+            baseReturn.Message = $"Ocorreu um erro inesperado durante o logout: {ex.Message}";
+        }
+
+        return await Task.FromResult(baseReturn);
+    }
+
     // Métodos de compatibilidade (obsoletos)
     [Obsolete("Use LoginAsync instead")]
     public async Task<BaseReturn<string>> Login(LoginRequest loginRequest)

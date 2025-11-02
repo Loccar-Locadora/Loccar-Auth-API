@@ -33,5 +33,11 @@ namespace LoccarAuth.Controllers
         {
             return await _authApplication.RegisterAsync(request);
         }
+
+        [HttpPost("logout")]
+        public async Task<BaseReturn<string>> LogoutAsync()
+        {
+            return await _authApplication.LogoutAsync();
+        }
     }
 }
