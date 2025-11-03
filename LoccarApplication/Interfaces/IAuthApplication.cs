@@ -15,12 +15,5 @@ namespace LoccarApplication.Interfaces
         Task<BaseReturn<string>> LoginAsync(LoginRequest loginRequest);
         Task<BaseReturn<UserData>> RegisterAsync(RegisterRequest request);
         Task<BaseReturn<string>> LogoutAsync();
-
-        // Métodos de compatibilidade (obsoletos)
-        [Obsolete("Use LoginAsync instead")]
-        Task<BaseReturn<string>> Login(LoginRequest loginRequest);
-        
-        [Obsolete("Use RegisterAsync instead")]
-        Task<BaseReturn<UserData>> Register(RegisterRequest request);
     }
 }

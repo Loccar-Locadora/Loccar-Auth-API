@@ -203,17 +203,4 @@ public class AuthApplication : IAuthApplication
 
         return await Task.FromResult(baseReturn);
     }
-
-    // Métodos de compatibilidade (obsoletos)
-    [Obsolete("Use LoginAsync instead")]
-    public async Task<BaseReturn<string>> Login(LoginRequest loginRequest)
-    {
-        return await LoginAsync(loginRequest);
-    }
-
-    [Obsolete("Use RegisterAsync instead")]
-    public async Task<BaseReturn<UserData>> Register(RegisterRequest request)
-    {
-        return await RegisterAsync(request);
-    }
 }
