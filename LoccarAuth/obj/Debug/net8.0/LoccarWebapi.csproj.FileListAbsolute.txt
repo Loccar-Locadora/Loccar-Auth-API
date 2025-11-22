@@ -484,7 +484,6 @@ C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\refint\L
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.pdb
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.genruntimeconfig.cache
 C:\Users\barre\Source\Repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\ref\LoccarWebapi.dll
-C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarWebapi.xml
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarApplication.xml
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarInfra.xml

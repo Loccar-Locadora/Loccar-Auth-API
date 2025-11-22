@@ -11,7 +11,7 @@
         "projectName": "LoccarApplication",
         "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarApplication\\LoccarApplication.csproj",
         "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarApplication\\obj\\",
+        "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarApplication\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -140,7 +140,7 @@
         "projectName": "LoccarWebapi",
         "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarAuth\\LoccarWebapi.csproj",
         "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarAuth\\obj\\",
+        "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarAuth\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -289,7 +289,7 @@
         "projectName": "LoccarDomain",
         "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarDomain\\LoccarDomain.csproj",
         "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarDomain\\obj\\",
+        "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarDomain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -407,7 +407,7 @@
         "projectName": "LoccarInfra",
         "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarInfra\\LoccarInfra.csproj",
         "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarInfra\\obj\\",
+        "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarInfra\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

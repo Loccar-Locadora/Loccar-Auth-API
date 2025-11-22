@@ -6087,7 +6087,7 @@
       "projectName": "LoccarTests",
       "projectPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarTests\\LoccarTests.csproj",
       "packagesPath": "C:\\Users\\barre\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\barre\\source\\repos\\Loccar-Auth-API\\LoccarTests\\obj\\",
+      "outputPath": "C:\\Users\\barre\\Source\\Repos\\Loccar-Auth-API\\LoccarTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
