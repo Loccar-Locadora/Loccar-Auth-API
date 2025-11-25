@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LoccarWebapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f9f8600236226b16ae66db98a7aafbfba7e818b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e768b609cbe6826b73132699f34d05d36ab87632")]
 [assembly: System.Reflection.AssemblyProductAttribute("LoccarWebapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LoccarWebapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

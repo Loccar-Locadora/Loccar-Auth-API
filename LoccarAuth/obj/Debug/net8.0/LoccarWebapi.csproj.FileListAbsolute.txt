@@ -489,3 +489,4 @@ C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarAp
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarInfra.xml
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\bin\Debug\net8.0\LoccarDomain.xml
 C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\LoccarWebapi.xml
+C:\Users\barre\source\repos\Loccar-Auth-API\LoccarAuth\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

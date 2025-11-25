@@ -21,14 +21,12 @@ public class AuthApplication : IAuthApplication
 {
     private readonly IConfiguration _config;
     private readonly IAuthRepository _authRepository;
-    private readonly string? _loccarApi;
     private readonly HttpClient _httpClient;
 
     public AuthApplication(IConfiguration config, IAuthRepository authRepository, HttpClient httpClient)
     {
         _config = config ?? throw new ArgumentNullException(nameof(config));
         _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
-        _loccarApi = config["LoccarApi:BaseUrl"];
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
 
@@ -135,7 +133,7 @@ public class AuthApplication : IAuthApplication
                 var json = JsonSerializer.Serialize(userData);
                 using var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(_loccarApi + "/customer/register", content);
+                var response = await _httpClient.PostAsync("https://loccar-api.onrender.com/api/customer/register", content);
 
                 if (!response.IsSuccessStatusCode)
                 {
